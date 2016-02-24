@@ -12,7 +12,7 @@ Arguments:
 Options:
     -h
 """
-import json
+import os
 import pdb
 import re
 import sys
@@ -69,22 +69,25 @@ def create_report_name(sample1, sample2, bid1, bid2):
 
 for fn in open(args['<list>'], 'r'):
     fn = fn.rstrip('\n')
-    pdb.set_trace()
-    bnids = re.match('^(\d+-\d+)_(\d+-\d+)', fn)
+    bnids = re.match('^(\d+-\d+)_(\d+-\d+)', os.path.basename(fn))
     (bid1, bid2) = (bnids.group(1), bnids.group(2))
     sample1_obj = get_info(bid=bid1, url=get_url, genome=args.get('<genome>'), caller=args.get('<caller>'))
     sample2_obj = get_info(bid=bid2, url=get_url, genome=args.get('<genome>'), caller=args.get('<caller>'))
     (bid1_pk, bid2_pk) = (sample1_obj.json()['bid_pk'], sample2_obj.json()['bid_pk'])
     study_pk = sample1_obj.json()['study']
+    genome_pk = sample1_obj.json()['genome_pk']
+    caller_pk = sample1_obj.json()['caller_pk']
     report_name = create_report_name(sample1=sample1_obj, sample2=sample2_obj, bid1=bid1, bid2=bid2)
-    metadata = json.dumps(
-        {'name': [report_name], 'study': [study_pk], 'bnids': [bid1_pk, bid2_pk], 'genome': [args.get('<genome>')],
-         'caller': [args.get('<caller>')], 'report_file': [fn]}, sort_keys=True, indent=4)
-    files = {'file': open(fn, 'rb')}
+    metadata = {'name': [report_name], 'study': [study_pk], 'bnids': (bid1_pk, bid2_pk), 'genome': [genome_pk],
+                'caller': [caller_pk]}
+    files = {'report_file': (fn, open(fn, 'rb'), 'application/octet-stream')}
+
     pdb.set_trace()
-    check = requests.post(args.get('<urlUp>'), json=metadata, files=files)
+    # metadata = 'file=' + fn + ';name=' + report_name + ';study=' + study_pk + ';genome=' + gen
+    # issuing a curl command may be easier to emulate a form submission
+    check = requests.post(args.get('<urlUp>'), data=metadata, files=files)
     slow_down = 'whoa horse!'
 
 
-    # TO DO - parse for tumor normal, generate report name
-    # upload using requests.put and requests.file into upload_report method of viewer
+# TO DO - parse for tumor normal, generate report name
+# upload using requests.put and requests.file into upload_report method of viewer
