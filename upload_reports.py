@@ -16,7 +16,7 @@ import json
 import os
 import re
 import sys
-
+import pdb
 import requests
 from docopt import docopt
 
@@ -39,11 +39,11 @@ def create_report_name(sample1, sample2, bid1, bid2):
     sample1_desc = sample1.json()['description']
     sample2_desc = sample2.json()['description']
     # try to look for tumor/normal in sample name or desc
-    root1 = re.search('(?i)(\S+)\s*(Tumor|T|Normal|N$)', sample1_name)
+    root1 = re.search('(?i)(\S*\s*\S+)\s*(Tumor|T|Normal|N$)', sample1_name)
     try:
         # just want first letter to indicate T(umor) etc
         rname = root1.group(1) + ' ' + root1.group(2)[0].upper() + '/'
-        root2 = re.search('(?i)(\S+)\s*(Tumor|T|Normal|N$)', sample2_name)
+        root2 = re.search('(?i)(\S*\s*\S+)\s*(Tumor|T|Normal|N$)', sample2_name)
         rname += root2.group(2)[0].upper()
     except:
         sys.stderr.write('Finding T/N in sample failed, trying description\n')
@@ -97,6 +97,7 @@ def upload_reports():
         (bid1, bid2) = (bnids.group(1), bnids.group(2))
 
         sample1_obj = get_info(bid=bid1, url=get_url, caller=caller, genome=genome)
+        pdb.set_trace()
         sample2_obj = get_info(bid=bid2, url=get_url, caller=caller, genome=genome)
         (bid1_pk, bid2_pk) = (sample1_obj.json()['bid_pk'], sample2_obj.json()['bid_pk'])
         study_pk = sample1_obj.json()['study']
