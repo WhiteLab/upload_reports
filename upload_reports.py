@@ -16,7 +16,7 @@ import json
 import os
 import re
 import sys
-import pdb
+
 import requests
 from docopt import docopt
 
@@ -97,19 +97,29 @@ def upload_reports():
         (bid1, bid2) = (bnids.group(1), bnids.group(2))
 
         sample1_obj = get_info(bid=bid1, url=get_url, caller=caller, genome=genome)
-        pdb.set_trace()
         sample2_obj = get_info(bid=bid2, url=get_url, caller=caller, genome=genome)
-        (bid1_pk, bid2_pk) = (sample1_obj.json()['bid_pk'], sample2_obj.json()['bid_pk'])
-        study_pk = sample1_obj.json()['study']
-        genome_pk = sample1_obj.json()['genome_pk']
-        caller_pk = sample1_obj.json()['caller_pk']
-        report_name = create_report_name(sample1=sample1_obj, sample2=sample2_obj, bid1=bid1, bid2=bid2)
-        metadata = {'name': [report_name], 'study': [study_pk], 'bnids': (bid1_pk, bid2_pk), 'genome': [genome_pk],
-                    'caller': [caller_pk]}
+        try:
+            (bid1_pk, bid2_pk) = (sample1_obj.json()['bid_pk'], sample2_obj.json()['bid_pk'])
+            study_pk = sample1_obj.json()['study']
+            genome_pk = sample1_obj.json()['genome_pk']
+            caller_pk = sample1_obj.json()['caller_pk']
+            report_name = create_report_name(sample1=sample1_obj, sample2=sample2_obj, bid1=bid1, bid2=bid2)
+            metadata = {'name': [report_name], 'study': [study_pk], 'bnids': (bid1_pk, bid2_pk), 'genome': [genome_pk],
+                        'caller': [caller_pk]}
+        except:
+            sys.stderr.write(
+                'Unable to retrieve information for report ' + fn + ' Got info ' +
+                json.dumps(sample1_obj.json()) + ' ' + json.dumps(sample2_obj.json()) + ' skipping!\n')
+            continue
         files = {'report_file': (fn, open(fn, 'rb'), 'application/octet-stream')}
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
-        post_client.post(post_url, data=metadata, files=files, headers=post_headers, cookies=post_cookies,
-                         allow_redirects=False)
+        check = post_client.post(post_url, data=metadata, files=files, headers=post_headers, cookies=post_cookies,
+                                 allow_redirects=False)
+        if check.status_code == 500:
+            sys.stderr.write('Could not upload ' + fn + ' ' + json.dumps(sample1_obj.json()) + ' ' + json.dumps(
+                sample2_obj.json()) + ' exiting!\n')
+            exit(1)
+        sys.stderr.write('Status for report ' + fn + ' ' + str(check.status_code) + '\n')
 
 
 def main():
