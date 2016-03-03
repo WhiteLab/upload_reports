@@ -91,7 +91,7 @@ def upload_reports():
     login_data = dict(username=username, password=password)
     r = post_client.post(login_url, login_data, cookies=post_cookies, headers=post_headers)
     if r.status_code == 200:
-        sys.syderr.write('Successfully logged in\n')
+        sys.stderr.write('Successfully logged in\n')
     else:
         sys.stderr.write('Login failed for url ' + login_url + '\n got error code ' + str(r.status_code) + '\n')
         exit(1)
