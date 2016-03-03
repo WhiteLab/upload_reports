@@ -90,7 +90,11 @@ def upload_reports():
     (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
     login_data = dict(username=username, password=password)
     r = post_client.post(login_url, login_data, cookies=post_cookies, headers=post_headers)
-
+    if r.status_code == 200:
+        sys.syderr.write('Successfully logged in\n')
+    else:
+        sys.stderr.write('Login failed for url ' + login_url + '\n got error code ' + str(r.status_code) + '\n')
+        exit(1)
     for fn in open(args['<list>'], 'r'):
         fn = fn.rstrip('\n')
         bnids = re.match('^(\d+-\d+)_(\d+-\d+)', os.path.basename(fn))
@@ -107,9 +111,12 @@ def upload_reports():
             metadata = {'name': [report_name], 'study': [study_pk], 'bnids': (bid1_pk, bid2_pk), 'genome': [genome_pk],
                         'caller': [caller_pk]}
         except:
-            sys.stderr.write(
-                'Unable to retrieve information for report ' + fn + ' Got info ' +
-                json.dumps(sample1_obj.json()) + ' ' + json.dumps(sample2_obj.json()) + ' skipping!\n')
+            try:
+                sys.stderr.write(
+                    'Unable to retrieve information for report ' + fn + ' Got info ' +
+                    json.dumps(sample1_obj.json()) + ' ' + json.dumps(sample2_obj.json()) + ' skipping!\n')
+            except:
+               sys.stderr.write('Received no information for ' + fn + '\n')
             continue
         files = {'report_file': (fn, open(fn, 'rb'), 'application/octet-stream')}
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
