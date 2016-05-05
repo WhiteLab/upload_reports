@@ -21,7 +21,7 @@ from docopt import docopt
 
 def set_web_stuff(client, url):
     # set verify to False if testing
-    client.get(url, verify=False)
+    client.get(url)
     return client.cookies['csrftoken'], dict(client.cookies), {"X-CSRFToken": client.cookies['csrftoken'],
                                                                "Referer": url}
 
