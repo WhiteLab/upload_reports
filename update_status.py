@@ -20,17 +20,16 @@ from docopt import docopt
 
 
 def set_web_stuff(client, url):
-    client.get(url)
+    # set verify to False if testing
+    client.get(url, verify=False)
     return client.cookies['csrftoken'], dict(client.cookies), {"X-CSRFToken": client.cookies['csrftoken'],
                                                                "Referer": url}
 
 def update_status():
     args = docopt(__doc__)
     config_data = json.loads(open(args.get('<config>'), 'r').read())
-    (login_url, get_url, post_url, genome, caller, username, password) = (
-        config_data['login_url'], config_data['urlGet'], config_data['urlUp'], config_data['genome'],
-        config_data['caller'],
-        config_data['username'], config_data['password'])
+    (login_url, post_url, username, password) = (config_data['login_url'], config_data['urlUp'],
+                                                 config_data['username'], config_data['password'])
 
     post_client = requests.session()
     (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
@@ -47,14 +46,13 @@ def update_status():
         (bid, field, value) = line.rstrip('\n').split('\t')
         updata = {'bnid': bid, field: value}
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
-        check = post_client.post(post_url, data=updata, headers=post_headers, cookies=post_cookies,
+        check = post_client.post(post_url, data=json.dumps(updata), headers=post_headers, cookies=post_cookies,
                                  allow_redirects=False)
         if check.status_code == 500:
-            sys.stderr.write('Could not update information for ' + bid + 'check connection and whether metadata exists '
-                                                                         'for this sample\n')
+            sys.stderr.write('Could not update information for ' + bid + ' ' + field + ' check connection and whether'
+                            ' metadata exists for this sample\n')
             exit(1)
-        sys.stderr.write('Status for report ' + fn + ' ' + str(check.status_code) + '\n')
-
+        sys.stderr.write('Status for update ' + bid + ' ' + str(check.status_code) + '\n')
 
 def main():
     update_status()
