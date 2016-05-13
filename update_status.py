@@ -48,11 +48,11 @@ def update_status():
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
         check = post_client.post(post_url, data=json.dumps(updata), headers=post_headers, cookies=post_cookies,
                                  allow_redirects=False)
-        if check.status_code == 500:
+        if check.status_code != 200:
             sys.stderr.write('Could not update information for ' + bid + ' ' + field + ' check connection and whether'
                             ' metadata exists for this sample\n')
-            exit(1)
-        sys.stderr.write('Status for update ' + bid + ' ' + str(check.status_code) + '\n')
+        else:
+            sys.stderr.write('Status for update ' + bid + ' ' + str(check.status_code) + '\n')
 
 def main():
     update_status()
