@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Plugin to interface with variant viewer - update sequencing/anaylsis status of samples in database
+Plugin to interface with variant viewer - update sequencing/analysis status of samples in database
 
 Usage: ./update_status.py <table> <config>
 
@@ -24,6 +24,7 @@ def set_web_stuff(client, url):
     client.get(url)
     return client.cookies['csrftoken'], dict(client.cookies), {"X-CSRFToken": client.cookies['csrftoken'],
                                                                "Referer": url}
+
 
 def update_status():
     args = docopt(__doc__)
