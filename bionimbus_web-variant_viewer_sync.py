@@ -13,32 +13,106 @@ Options:
 
 import json
 import sys
-
+import pdb
 import requests
+import psycopg2
+import re
 from docopt import docopt
 
 
 def set_web_stuff(client, url):
     # set verify to False if testing
-    client.get(url)
+    client.get(url, verify=False)
     return client.cookies['csrftoken'], dict(client.cookies), {"X-CSRFToken": client.cookies['csrftoken'],
                                                                "Referer": url}
+
+
+def db_connect(database, username, password, host):
+    try:
+        constring = "dbname=" + database + " user=" + username + " password=" + password + " host=" + host
+        return psycopg2.connect(constring)
+    except:
+        sys.stderr.write('Failed connection\n')
+        exit(1)
+
+
+def check_variant_viewer(result, sid, login, get_bnid, client):
+    # get all study-related info at once to check
+    getUrl = get_bnid + str(sid) + '/'
+    study_info = client.get(getUrl, params=login)
+    bnid_dict = {}
+    for key in study_info.json():
+        bnid = re.search('(\d+-\d+)\)$', study_info.json()[key])
+        bnid_dict[bnid.group(1)] = 1
+    to_add = {}
+    pdb.set_trace()
+    for entry in result:
+        (study, sample, bnid, d1, d2, cell) = entry
+        if bnid not in bnid_dict:
+            if d1 is not None:
+                desc = d1
+                if d2 is not None:
+                    desc = desc + ' ' + d2
+            elif d2 is not None:
+                desc = d2
+            else:
+                desc = 'NA'
+            if cell is None:
+                cell = 'NA'
+            to_add[bnid] = (study, sample, bnid, desc, cell)
+    return to_add
+
+
+def query_bionimbus_web(conn, subproj):
+    if subproj != 'PDX':
+        # planning on using sample and treatment fields as part of experiment description
+        query = "SELECT S.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source FROM " \
+                "t_experiment_unit EU, t_subproject S WHERE EU.f_subproject=S.id AND S.f_name='" + subproj + "' AND " \
+                "EU.is_active='T'"
+    else:
+        query = "SELECT P.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source FROM " \
+                "t_experiment_unit EU, t_project P WHERE EU.f_project=P.id AND P.f_name='" + subproj + "' AND " \
+                "EU.is_Active='T'"
+    sys.stderr.write(query + '\n')
+    cur = conn.cursor()
+    cur.execute(query)
+    entries = cur.fetchall()
+    return entries
+
 
 def sync_status():
     args = docopt(__doc__)
     config_data = json.loads(open(args.get('<config>'), 'r').read())
-    (login_url, post_url, username, password) = (config_data['login_url'], config_data['urlUp'],
-                                                 config_data['username'], config_data['password'])
+    (login_url, post_url, username, password, get_study_url, get_bnid_url, db_user, db_pw, db_host, database) =\
+        (config_data['login_url'], config_data['urlUp'], config_data['username'],
+         config_data['password'], config_data['urlGetStudy'], config_data['urlGetBnid'], config_data['dbUser'],
+         config_data['dbPw'], config_data['dbHost'], config_data['db'])
 
     post_client = requests.session()
     (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
     login_data = dict(username=username, password=password)
     r = post_client.post(login_url, login_data, cookies=post_cookies, headers=post_headers)
     # get list of studies to check bionimbus web for
+    if r.status_code == 200:
+        sys.stderr.write('Successfully logged in\n')
+    else:
+        sys.stderr.write('Login failed for url ' + login_url + '\n got error code ' + str(r.status_code) + '\n')
+        exit(1)
 
-    # query bionimbus web for all with project and subproject (study)
-
-    # populate variant viewer with metadata for relevant studies if not populated already
+    # query bionimbus web for all with project and sub project (study)
+    check = post_client.get(get_study_url, params=login_data)
+    if check.status_code != 200:
+        sys.stderr.write('Lookup request failed.  Check cookies and tokens and try again\n')
+        exit(1)
+    con = db_connect(database, db_user, db_pw, db_host)
+    for key in check.json():
+        # adding pk for study to leverage metadata lookup function get_bnid_by_study
+        entries = query_bionimbus_web(con, key)
+        if len(entries) > 0:
+            to_add = check_variant_viewer(entries, check.json()[key], login_data, get_bnid_url, post_client)
+            if len(to_add) > 0:
+                pdb.set_trace()
+                # populate variant viewer with metadata for relevant studies if not populated already
 
     # check variant viewer for status submitted for sequencing
 
