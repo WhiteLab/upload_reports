@@ -36,7 +36,7 @@ def db_connect(database, username, password, host):
         exit(1)
 
 
-def check_variant_viewer(result, sid, login, get_bnid, client):
+def check_variant_viewer(result, sid, login, get_bnid, client, to_add):
     # get all study-related info at once to check
     getUrl = get_bnid + str(sid) + '/'
     study_info = client.get(getUrl, params=login)
@@ -44,7 +44,6 @@ def check_variant_viewer(result, sid, login, get_bnid, client):
     for key in study_info.json():
         bnid = re.search('(\d+-\d+)\)$', study_info.json()[key])
         bnid_dict[bnid.group(1)] = 1
-    to_add = {}
     pdb.set_trace()
     for entry in result:
         (study, sample, bnid, d1, d2, cell) = entry
@@ -59,7 +58,7 @@ def check_variant_viewer(result, sid, login, get_bnid, client):
                 desc = 'NA'
             if cell is None:
                 cell = 'NA'
-            to_add[bnid] = (study, sample, bnid, desc, cell)
+            to_add['sheet'].append(study, sample, bnid, desc, cell)
     return to_add
 
 
@@ -83,10 +82,10 @@ def query_bionimbus_web(conn, subproj):
 def sync_status():
     args = docopt(__doc__)
     config_data = json.loads(open(args.get('<config>'), 'r').read())
-    (login_url, post_url, username, password, get_study_url, get_bnid_url, db_user, db_pw, db_host, database) =\
+    (login_url, post_url, username, password, get_study_url, get_bnid_url, db_user, db_pw, db_host, database, post_meta_url) =\
         (config_data['login_url'], config_data['urlUp'], config_data['username'],
          config_data['password'], config_data['urlGetStudy'], config_data['urlGetBnid'], config_data['dbUser'],
-         config_data['dbPw'], config_data['dbHost'], config_data['db'])
+         config_data['dbPw'], config_data['dbHost'], config_data['db'], config_data['postMetaUrl'])
 
     post_client = requests.session()
     (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
@@ -105,15 +104,23 @@ def sync_status():
         sys.stderr.write('Lookup request failed.  Check cookies and tokens and try again\n')
         exit(1)
     con = db_connect(database, db_user, db_pw, db_host)
+    # dict of rows to add to mimic sheet submission
+    to_add = {'sheet': []}
     for key in check.json():
         # adding pk for study to leverage metadata lookup function get_bnid_by_study
         entries = query_bionimbus_web(con, key)
         if len(entries) > 0:
-            to_add = check_variant_viewer(entries, check.json()[key], login_data, get_bnid_url, post_client)
-            if len(to_add) > 0:
-                pdb.set_trace()
-                # populate variant viewer with metadata for relevant studies if not populated already
+            to_add = check_variant_viewer(entries, check.json()[key], login_data, get_bnid_url, post_client, to_add)
 
+    # populate variant viewer with metadata for relevant studies if not populated already
+    if len(to_add) > 0:
+        pdb.set_trace()
+        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
+        check = post_client.post(post_url, data=to_add, headers=post_headers, cookies=post_cookies,
+                                 allow_redirects=False)
+        if check.status_code == 500:
+            sys.stderr.write('Adding new netadata failed!\n')
+            exit(1)
     # check variant viewer for status submitted for sequencing
 
     # check bionimbus web to see if tfile exists, indicating it's been sequenced
