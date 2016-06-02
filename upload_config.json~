@@ -1,8 +1,0 @@
-{
-    "genome": "hg19",
-    "caller": "MuTect",
-    "urlGet": "http://127.0.0.1:8000/viewer/report/get_info/",
-    "urlUp": "http://127.0.0.1:8000/viewer/report/upload_report/“,
-    "username": "mbrown",
-    "password": "poopstick"
-}
