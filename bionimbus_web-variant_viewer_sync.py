@@ -36,7 +36,7 @@ def db_connect(database, username, password, host):
         exit(1)
 
 
-def check_variant_viewer(result, sid, login, get_bnid, client, to_add):
+def check_variant_viewer(result, sid, login, get_bnid, client, to_add, date_dict):
     # get all study-related info at once to check
     getUrl = get_bnid + str(sid) + '/'
     study_info = client.get(getUrl, params=login)
@@ -46,7 +46,7 @@ def check_variant_viewer(result, sid, login, get_bnid, client, to_add):
         bnid_dict[bnid.group(1)] = 1
     pdb.set_trace()
     for entry in result:
-        (study, sample, bnid, d1, d2, cell) = entry
+        (study, sample, bnid, d1, d2, cell, date) = entry
         if bnid not in bnid_dict:
             if d1 is not None:
                 desc = d1
@@ -59,19 +59,20 @@ def check_variant_viewer(result, sid, login, get_bnid, client, to_add):
             if cell is None:
                 cell = 'NA'
             to_add['sheet'].append(study, sample, bnid, desc, cell)
-    return to_add
+            date_dict[bnid] = date
+    return to_add, date_dict
 
 
 def query_bionimbus_web(conn, subproj):
     if subproj != 'PDX':
         # planning on using sample and treatment fields as part of experiment description
-        query = "SELECT S.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source FROM " \
-                "t_experiment_unit EU, t_subproject S WHERE EU.f_subproject=S.id AND S.f_name='" + subproj + "' AND " \
-                "EU.is_active='T'"
+        query = "SELECT S.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source, " \
+                "EU.created_on FROM t_experiment_unit EU, t_subproject S WHERE EU.f_subproject=S.id AND S.f_name='"\
+                + subproj + "' AND  EU.is_active='T'"
     else:
-        query = "SELECT P.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source FROM " \
-                "t_experiment_unit EU, t_project P WHERE EU.f_project=P.id AND P.f_name='" + subproj + "' AND " \
-                "EU.is_Active='T'"
+        query = "SELECT P.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source, " \
+                "EU.created_on FROM  t_experiment_unit EU, t_project P WHERE EU.f_project=P.id AND P.f_name='" \
+                + subproj + "' AND  EU.is_Active='T'"
     sys.stderr.write(query + '\n')
     cur = conn.cursor()
     cur.execute(query)
@@ -82,10 +83,11 @@ def query_bionimbus_web(conn, subproj):
 def sync_status():
     args = docopt(__doc__)
     config_data = json.loads(open(args.get('<config>'), 'r').read())
-    (login_url, post_url, username, password, get_study_url, get_bnid_url, db_user, db_pw, db_host, database, post_meta_url) =\
-        (config_data['login_url'], config_data['urlUp'], config_data['username'],
+    (login_url, post_url, username, password, get_study_url, get_bnid_url, db_user, db_pw, db_host, database,
+     post_meta_url, set_status_url) = (config_data['login_url'], config_data['urlUp'], config_data['username'],
          config_data['password'], config_data['urlGetStudy'], config_data['urlGetBnid'], config_data['dbUser'],
-         config_data['dbPw'], config_data['dbHost'], config_data['db'], config_data['postMetaUrl'])
+         config_data['dbPw'], config_data['dbHost'], config_data['db'], config_data['postMetaUrl'],
+                                         config_data['setStatusUrl'])
 
     post_client = requests.session()
     (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
@@ -106,11 +108,14 @@ def sync_status():
     con = db_connect(database, db_user, db_pw, db_host)
     # dict of rows to add to mimic sheet submission
     to_add = {'sheet': []}
+    # dict for setting date of submission
+    date_dict = {}
     for key in check.json():
         # adding pk for study to leverage metadata lookup function get_bnid_by_study
         entries = query_bionimbus_web(con, key)
         if len(entries) > 0:
-            to_add = check_variant_viewer(entries, check.json()[key], login_data, get_bnid_url, post_client, to_add)
+            (to_add, date_dict) = check_variant_viewer(entries, check.json()[key], login_data, get_bnid_url,
+                                                       post_client, to_add, date_dict)
 
     # populate variant viewer with metadata for relevant studies if not populated already
     if len(to_add) > 0:
@@ -119,9 +124,21 @@ def sync_status():
         check = post_client.post(post_url, data=to_add, headers=post_headers, cookies=post_cookies,
                                  allow_redirects=False)
         if check.status_code == 500:
-            sys.stderr.write('Adding new netadata failed!\n')
+            sys.stderr.write('Adding new metadata failed!\n')
             exit(1)
-    # check variant viewer for status submitted for sequencing
+    # set variant viewer for status submitted for sequencing for newly added stuff
+    for new_entry in to_add:
+        to_update = {'bnid': new_entry[2], 'submit_date': date_dict[new_entry[2]]}
+        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
+        check = post_client.post(post_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
+                                 allow_redirects=False)
+        status = 'Sample submitted for sequencing'
+        to_update = {'bnid': new_entry[2], 'status': status}
+        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
+        check = post_client.post(post_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
+                                 allow_redirects=False)
+        if check.status_code != 200:
+            sys.stderr.write('Could not set seq status')
 
     # check bionimbus web to see if tfile exists, indicating it's been sequenced
 
