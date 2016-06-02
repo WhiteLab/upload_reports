@@ -44,7 +44,6 @@ def check_variant_viewer(result, sid, login, get_bnid, client, to_add, date_dict
     for key in study_info.json():
         bnid = re.search('(\d+-\d+)\)$', study_info.json()[key])
         bnid_dict[bnid.group(1)] = 1
-    pdb.set_trace()
     for entry in result:
         (study, sample, bnid, d1, d2, cell, date) = entry
         if bnid not in bnid_dict:
@@ -58,8 +57,9 @@ def check_variant_viewer(result, sid, login, get_bnid, client, to_add, date_dict
                 desc = 'NA'
             if cell is None:
                 cell = 'NA'
-            to_add['sheet'].append(study, sample, bnid, desc, cell)
+            to_add['sheet'].append((study, sample, bnid, desc, cell))
             date_dict[bnid] = date
+            sys.stderr.write('Found new entry to add for bionimbus id ' + bnid + ' sample ' + sample + '\n')
     return to_add, date_dict
 
 
@@ -121,24 +121,30 @@ def sync_status():
     if len(to_add) > 0:
         pdb.set_trace()
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
-        check = post_client.post(post_url, data=to_add, headers=post_headers, cookies=post_cookies,
+        post_headers.update(to_add)
+        check = post_client.post(post_meta_url, headers=post_headers, cookies=post_cookies,
                                  allow_redirects=False)
         if check.status_code == 500:
             sys.stderr.write('Adding new metadata failed!\n')
             exit(1)
+        sys.stderr.write('Created new entries in variant viewer\n')
     # set variant viewer for status submitted for sequencing for newly added stuff
     for new_entry in to_add:
-        to_update = {'bnid': new_entry[2], 'submit_date': date_dict[new_entry[2]]}
+        bnid = new_entry[2]
+        to_update = {'bnid': bnid, 'submit_date': date_dict[bnid]}
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
-        check = post_client.post(post_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
+        check = post_client.post(set_status_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
                                  allow_redirects=False)
+        if check.status_code != 200:
+            sys.stderr.write('Could not set submit date for ' + bnid + '\n')
         status = 'Sample submitted for sequencing'
-        to_update = {'bnid': new_entry[2], 'status': status}
+        to_update = {'bnid': bnid, 'status': status}
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
-        check = post_client.post(post_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
+        check = post_client.post(set_status_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
                                  allow_redirects=False)
         if check.status_code != 200:
             sys.stderr.write('Could not set seq status')
+        sys.stderr.write('Updated submission status for samples\n')
 
     # check bionimbus web to see if tfile exists, indicating it's been sequenced
 
