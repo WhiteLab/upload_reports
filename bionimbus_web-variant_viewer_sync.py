@@ -119,19 +119,21 @@ def sync_status():
 
     # populate variant viewer with metadata for relevant studies if not populated already
     if len(to_add) > 0:
-        pdb.set_trace()
+
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
-        post_headers.update(to_add)
-        check = post_client.post(post_meta_url, headers=post_headers, cookies=post_cookies,
-                                 allow_redirects=False)
+        # post_headers.update({'name': 'sheet'})
+        check = post_client.post(post_meta_url, data=json.dumps(to_add), headers=post_headers,
+                                 cookies=post_cookies, allow_redirects=False)
         if check.status_code == 500:
             sys.stderr.write('Adding new metadata failed!\n')
             exit(1)
         sys.stderr.write('Created new entries in variant viewer\n')
     # set variant viewer for status submitted for sequencing for newly added stuff
-    for new_entry in to_add:
+    for new_entry in to_add['sheet']:
         bnid = new_entry[2]
-        to_update = {'bnid': bnid, 'submit_date': date_dict[bnid]}
+        # date_dict has datetime objects, need to conver to to str
+        to_update = {'bnid': bnid, 'submit_date': str(date_dict[bnid])}
+        pdb.set_trace()
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
         check = post_client.post(set_status_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
                                  allow_redirects=False)
