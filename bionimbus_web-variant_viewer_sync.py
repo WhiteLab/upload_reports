@@ -67,15 +67,15 @@ def query_bionimbus_web(conn, subproj):
     if subproj != 'PDX':
         # planning on using sample and treatment fields as part of experiment description
         query = "SELECT S.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source, " \
-                "EU.created_on FROM t_experiment_unit EU, t_subproject S WHERE EU.f_subproject=S.id AND S.f_name='"\
-                + subproj + "' AND  EU.is_active='T'"
+                "EU.created_on FROM t_experiment_unit EU, t_subproject S WHERE EU.f_subproject=S.id AND S.f_name=%s " \
+                "AND  EU.is_active='T'"
     else:
         query = "SELECT P.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source, " \
-                "EU.created_on FROM  t_experiment_unit EU, t_project P WHERE EU.f_project=P.id AND P.f_name='" \
-                + subproj + "' AND  EU.is_Active='T'"
+                "EU.created_on FROM  t_experiment_unit EU, t_project P WHERE EU.f_project=P.id AND P.f_name=%s " \
+                "AND  EU.is_Active='T'"
     sys.stderr.write(query + '\n')
     cur = conn.cursor()
-    cur.execute(query)
+    cur.execute(query, (subproj,))
     entries = cur.fetchall()
     return entries
 
