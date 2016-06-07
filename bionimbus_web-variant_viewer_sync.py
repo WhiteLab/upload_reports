@@ -22,7 +22,7 @@ from docopt import docopt
 
 def set_web_stuff(client, url):
     # set verify to False if testing
-    client.get(url, verify=False)
+    client.get(url)
     return client.cookies['csrftoken'], dict(client.cookies), {"X-CSRFToken": client.cookies['csrftoken'],
                                                                "Referer": url}
 
@@ -133,7 +133,6 @@ def sync_status():
         bnid = new_entry[2]
         # date_dict has datetime objects, need to conver to to str
         to_update = {'bnid': bnid, 'submit_date': str(date_dict[bnid])}
-        pdb.set_trace()
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
         check = post_client.post(set_status_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
                                  allow_redirects=False)
