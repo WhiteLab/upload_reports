@@ -35,6 +35,33 @@ def db_connect(database, username, password, host):
         exit(1)
 
 
+def check_seq_status(db, bnid):
+    query = "SELECT F.created_on FROM t_file F WHERE F.f_bionimbus_id=%s AND F.is_active='T'"
+    sys.stderr.write(query + ' ' + bnid + '\n')
+    cur = db.cursor()
+    cur.execute(query, (bnid,))
+    entry = cur.fetchone()
+    return entry
+
+
+def update_status(bnid, seq_date, post_client, login_url, set_status_url):
+        pdb.set_trace()
+        to_update = {'bnid': bnid, 'sequence_date': seq_date}
+        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
+        check = post_client.post(set_status_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
+                                 allow_redirects=False)
+        if check.status_code != 200:
+            sys.stderr.write('Could not set submit date for ' + bnid + '\n')
+        status = 'SEQUENCED'
+        to_update = {'bnid': bnid, 'status': status}
+        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
+        check = post_client.post(set_status_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
+                                 allow_redirects=False)
+        if check.status_code != 200:
+            sys.stderr.write('Could not set seq status')
+        sys.stderr.write('Updated sequencing status for ' + bnid + '\n')
+
+
 def sync_status():
     args = docopt(__doc__)
     config_data = json.loads(open(args.get('<config>'), 'r').read())
@@ -53,8 +80,14 @@ def sync_status():
     else:
         sys.stderr.write('Login failed for url ' + login_url + '\n got error code ' + str(r.status_code) + '\n')
     status_info = post_client.get(get_status_url, params=login_data)
-    pdb.set_trace()
-    hold = 'horses'
+    # check bionimbus web for samples that have been sequenced
+    con = db_connect(database, db_user, db_pw, db_host)
+    for bnid in status_info.json():
+        status = status_info.json()[bnid]
+        if status == 'Sample submitted for sequencing':
+            seq_date = check_seq_status(con, bnid)
+            if seq_date is not None:
+                update_status(bnid, str(seq_date[0]), post_client, login_url, set_status_url)
 
 
 

@@ -13,7 +13,6 @@ Options:
 
 import json
 import sys
-import pdb
 import requests
 import psycopg2
 import re
@@ -101,8 +100,8 @@ def sync_status():
         exit(1)
 
     # query bionimbus web for all with project and sub project (study)
-    check = post_client.get(get_study_url, params=login_data)
-    if check.status_code != 200:
+    study_info = post_client.get(get_study_url, params=login_data)
+    if study_info.status_code != 200:
         sys.stderr.write('Lookup request failed.  Check cookies and tokens and try again\n')
         exit(1)
     con = db_connect(database, db_user, db_pw, db_host)
@@ -110,11 +109,11 @@ def sync_status():
     to_add = {'sheet': []}
     # dict for setting date of submission
     date_dict = {}
-    for key in check.json():
+    for key in study_info.json():
         # adding pk for study to leverage metadata lookup function get_bnid_by_study
         entries = query_bionimbus_web(con, key)
         if len(entries) > 0:
-            (to_add, date_dict) = check_variant_viewer(entries, check.json()[key], login_data, get_bnid_url,
+            (to_add, date_dict) = check_variant_viewer(entries, study_info.json()[key], login_data, get_bnid_url,
                                                        post_client, to_add, date_dict)
 
     # populate variant viewer with metadata for relevant studies if not populated already
@@ -131,7 +130,7 @@ def sync_status():
     # set variant viewer for status submitted for sequencing for newly added stuff
     for new_entry in to_add['sheet']:
         bnid = new_entry[2]
-        # date_dict has datetime objects, need to conver to to str
+        # date_dict has datetime objects, need to convert to to str
         to_update = {'bnid': bnid, 'submit_date': str(date_dict[bnid])}
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
         check = post_client.post(set_status_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
@@ -146,9 +145,6 @@ def sync_status():
         if check.status_code != 200:
             sys.stderr.write('Could not set seq status')
         sys.stderr.write('Updated submission status for samples\n')
-
-    # check bionimbus web to see if tfile exists, indicating it's been sequenced
-
 
 
 def main():
