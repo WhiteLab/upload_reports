@@ -45,7 +45,6 @@ def check_seq_status(db, bnid):
 
 
 def update_status(bnid, seq_date, post_client, login_url, set_status_url):
-        pdb.set_trace()
         to_update = {'bnid': bnid, 'sequence_date': seq_date}
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
         check = post_client.post(set_status_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
