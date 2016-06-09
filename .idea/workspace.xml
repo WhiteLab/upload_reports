@@ -50,13 +50,13 @@
       <file leaf-file-name="bionimbus_web-variant_viewer_sync.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bionimbus_web-variant_viewer_sync.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.53267044">
-              <caret line="25" column="18" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.33238637">
+              <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
               <folding>
                 <element signature="e#274#285#0" expanded="true" />
-                <marker date="1465499971000" expanded="true" signature="2262:2510" placeholder="SELECT S.f_n... t_experiment_unit" />
-                <marker date="1465499971000" expanded="true" signature="2262:2513" placeholder="SELECT S.f_n... t_experiment_unit" />
-                <marker date="1465499971000" expanded="true" signature="2542:2788" placeholder="SELECT P.f_n... t_experiment_unit" />
+                <marker date="1465500031000" expanded="true" signature="2262:2510" placeholder="SELECT S.f_n... t_experiment_unit" />
+                <marker date="1465500031000" expanded="true" signature="2262:2513" placeholder="SELECT S.f_n... t_experiment_unit" />
+                <marker date="1465500031000" expanded="true" signature="2542:2788" placeholder="SELECT P.f_n... t_experiment_unit" />
               </folding>
             </state>
           </provider>
@@ -557,7 +557,13 @@
       <option name="project" value="LOCAL" />
       <updated>1465499416771</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Added initializing status for metadata already in variant viewer">
+      <created>1465499975479</created>
+      <option name="number" value="00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1465499975479</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -662,9 +668,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#274#285#0" expanded="true" />
-            <marker date="1465499971000" expanded="true" signature="2262:2510" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465499971000" expanded="true" signature="2262:2513" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465499971000" expanded="true" signature="2542:2788" placeholder="SELECT P.f_n... t_experiment_unit" />
+            <marker date="1465500031000" expanded="true" signature="2262:2510" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465500031000" expanded="true" signature="2262:2513" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465500031000" expanded="true" signature="2542:2788" placeholder="SELECT P.f_n... t_experiment_unit" />
           </folding>
         </state>
       </provider>
@@ -701,9 +707,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#274#285#0" expanded="true" />
-            <marker date="1465499971000" expanded="true" signature="2262:2510" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465499971000" expanded="true" signature="2262:2513" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465499971000" expanded="true" signature="2542:2788" placeholder="SELECT P.f_n... t_experiment_unit" />
+            <marker date="1465500031000" expanded="true" signature="2262:2510" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465500031000" expanded="true" signature="2262:2513" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465500031000" expanded="true" signature="2542:2788" placeholder="SELECT P.f_n... t_experiment_unit" />
           </folding>
         </state>
       </provider>
@@ -1065,13 +1071,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bionimbus_web-variant_viewer_sync.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.53267044">
-          <caret line="25" column="18" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.33238637">
+          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
           <folding>
             <element signature="e#274#285#0" expanded="true" />
-            <marker date="1465499971000" expanded="true" signature="2262:2510" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465499971000" expanded="true" signature="2262:2513" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465499971000" expanded="true" signature="2542:2788" placeholder="SELECT P.f_n... t_experiment_unit" />
+            <marker date="1465500031000" expanded="true" signature="2262:2510" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465500031000" expanded="true" signature="2262:2513" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465500031000" expanded="true" signature="2542:2788" placeholder="SELECT P.f_n... t_experiment_unit" />
           </folding>
         </state>
       </provider>

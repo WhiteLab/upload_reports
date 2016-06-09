@@ -85,7 +85,6 @@ def query_bionimbus_web(conn, subproj):
 
 def check_status(bnid, post_client, login_url, check_status_url):
         to_check = {'bnid': bnid}
-        pdb.set_trace()
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
         check = post_client.post(check_status_url, data=json.dumps(to_check), headers=post_headers,
                                  cookies=post_cookies, allow_redirects=False)
