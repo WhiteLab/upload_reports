@@ -17,8 +17,8 @@ import sys
 import requests
 import pdb
 from docopt import docopt
-from bionimbus_web_variant_viewer_sync import set_web_stuff
-from bionimbus_web_variant_viewer_sync import db_connect
+from login_tools import set_web_stuff
+from login_tools import db_connect
 
 
 def check_seq_status(db, bnid):
@@ -76,7 +76,6 @@ def sync_seq_status():
             if seq_date is not None:
                 update_status(bnid, str(seq_date[0]), post_client, login_url, set_status_url,
                               'sequence_date', 'SEQUENCED')
-
 
 
 def main():

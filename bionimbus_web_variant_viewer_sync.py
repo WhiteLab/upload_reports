@@ -18,23 +18,9 @@ import psycopg2
 import re
 import pdb
 from docopt import docopt
+from login_tools import set_web_stuff
+from login_tools import db_connect
 from sync_seq_info import update_status
-
-
-def set_web_stuff(client, url):
-    # set verify to False if testing
-    client.get(url)
-    return client.cookies['csrftoken'], dict(client.cookies), {"X-CSRFToken": client.cookies['csrftoken'],
-                                                               "Referer": url}
-
-
-def db_connect(database, username, password, host):
-    try:
-        constring = "dbname=" + database + " user=" + username + " password=" + password + " host=" + host
-        return psycopg2.connect(constring)
-    except:
-        sys.stderr.write('Failed connection\n')
-        exit(1)
 
 
 def check_variant_viewer(result, sid, login, get_bnid, client, to_add, date_dict, to_check):
