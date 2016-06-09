@@ -156,7 +156,6 @@ def sync_meta_status():
             if check != 0:
                 sys.stderr.write('Could not set seq status')
                 exit(1)
-            sys.stderr.write('Updated submission status for ' + bnid + '\n')
 
     if len(to_check) > 0:
         for bnid in to_check:

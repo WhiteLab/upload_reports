@@ -60,7 +60,7 @@ def update_status(bnid, seq_date, post_client, login_url, set_status_url, field,
         if check.status_code != 200:
             sys.stderr.write('Could not set seq status')
             return 1
-        sys.stderr.write('Updated sequencing status for ' + bnid + '\n')
+        sys.stderr.write('Updated status ' + status + ' for ' + bnid + '\n')
         return 0
 
 
