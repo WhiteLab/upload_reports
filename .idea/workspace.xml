@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8841502b-757c-406f-aacf-3ff33d353e62" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bionimbus_web-variant_viewer_sync.py" afterPath="$PROJECT_DIR$/bionimbus_web-variant_viewer_sync.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bionimbus_web_variant_viewer_sync.py" afterPath="$PROJECT_DIR$/bionimbus_web_variant_viewer_sync.py" />
     </list>
     <ignored path="upload_reports.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,7 +29,7 @@
         <entry file="file://$PROJECT_DIR$/update_status.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+              <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
               <folding>
                 <element signature="e#399#410#0" expanded="true" />
               </folding>
@@ -47,16 +47,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bionimbus_web-variant_viewer_sync.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/bionimbus_web-variant_viewer_sync.py">
+      <file leaf-file-name="bionimbus_web_variant_viewer_sync.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/bionimbus_web_variant_viewer_sync.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33238637">
-              <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.38210228">
+              <caret line="140" column="28" selection-start-line="140" selection-start-column="20" selection-end-line="140" selection-end-column="28" />
               <folding>
                 <element signature="e#274#285#0" expanded="true" />
-                <marker date="1465500031000" expanded="true" signature="2262:2510" placeholder="SELECT S.f_n... t_experiment_unit" />
-                <marker date="1465500031000" expanded="true" signature="2262:2513" placeholder="SELECT S.f_n... t_experiment_unit" />
-                <marker date="1465500031000" expanded="true" signature="2542:2788" placeholder="SELECT P.f_n... t_experiment_unit" />
+                <marker date="1465502581000" expanded="true" signature="1769:2017" placeholder="SELECT S.f_n... t_experiment_unit" />
+                <marker date="1465502581000" expanded="true" signature="1769:2020" placeholder="SELECT S.f_n... t_experiment_unit" />
+                <marker date="1465502581000" expanded="true" signature="2049:2295" placeholder="SELECT P.f_n... t_experiment_unit" />
               </folding>
             </state>
           </provider>
@@ -65,17 +65,29 @@
       <file leaf-file-name="sync_seq_info.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sync_seq_info.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+            <state vertical-scroll-proportion="-8.851851">
+              <caret line="60" column="57" selection-start-line="60" selection-start-column="51" selection-end-line="60" selection-end-column="57" />
               <folding>
                 <element signature="e#337#348#0" expanded="true" />
-                <marker date="1465493910000" expanded="true" signature="1042:1066" placeholder="SELECT F.cre... " />
-                <marker date="1465493910000" expanded="true" signature="1042:1073" placeholder="SELECT F.cre... t_file" />
-                <marker date="1465493910000" expanded="true" signature="1042:1081" placeholder="SELECT F.cre... t_file" />
-                <marker date="1465493910000" expanded="true" signature="1042:1100" placeholder="SELECT F.cre... t_file" />
-                <marker date="1465493910000" expanded="true" signature="1042:1101" placeholder="SELECT F.cre... t_file" />
-                <marker date="1465493910000" expanded="true" signature="1042:1105" placeholder="SELECT F.cre... t_file" />
-                <marker date="1465493910000" expanded="true" signature="1042:1121" placeholder="SELECT F.cre... t_file" />
+                <marker date="1465502293000" expanded="true" signature="533:557" placeholder="SELECT F.cre... " />
+                <marker date="1465502293000" expanded="true" signature="533:564" placeholder="SELECT F.cre... t_file" />
+                <marker date="1465502293000" expanded="true" signature="533:572" placeholder="SELECT F.cre... t_file" />
+                <marker date="1465502293000" expanded="true" signature="533:591" placeholder="SELECT F.cre... t_file" />
+                <marker date="1465502293000" expanded="true" signature="533:592" placeholder="SELECT F.cre... t_file" />
+                <marker date="1465502293000" expanded="true" signature="533:596" placeholder="SELECT F.cre... t_file" />
+                <marker date="1465502293000" expanded="true" signature="533:612" placeholder="SELECT F.cre... t_file" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login_tools.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/login_tools.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="9" column="20" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -94,8 +106,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.252809">
+              <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -119,11 +131,12 @@
         <option value="$PROJECT_DIR$/../upload_reports/.gitignore" />
         <option value="$PROJECT_DIR$/../upload_reports/upload_reports.py" />
         <option value="$PROJECT_DIR$/../upload_reports/update_status.py" />
-        <option value="$PROJECT_DIR$/update_status.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/bionimbus_web_variant_viewer_sync.py" />
-        <option value="$PROJECT_DIR$/sync_seq_info.py" />
         <option value="$PROJECT_DIR$/bionimbus_web-variant_viewer_sync.py" />
+        <option value="$PROJECT_DIR$/update_status.py" />
+        <option value="$PROJECT_DIR$/sync_seq_info.py" />
+        <option value="$PROJECT_DIR$/login_tools.py" />
+        <option value="$PROJECT_DIR$/bionimbus_web_variant_viewer_sync.py" />
       </list>
     </option>
   </component>
@@ -563,7 +576,37 @@
       <option name="project" value="LOCAL" />
       <updated>1465499975479</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Removed set trace">
+      <created>1465500039617</created>
+      <option name="number" value="00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1465500039617</updated>
+    </task>
+    <task id="LOCAL-00029" summary="clarified outputs">
+      <created>1465500933560</created>
+      <option name="number" value="00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1465500933560</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Changed meta data script sync name to allow for import.  Created flag for verifying url when testing">
+      <created>1465501443837</created>
+      <option name="number" value="00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1465501443837</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Created login tools module to reduce redundancy">
+      <created>1465502309626</created>
+      <option name="number" value="00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1465502309626</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Fixed web stuff args">
+      <created>1465502492930</created>
+      <option name="number" value="00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1465502492930</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -605,10 +648,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Working report name generator based on parsing sample information" />
-    <MESSAGE value="Report name generator works, able to send and receive info needed to get report metadata, need to create correct post request for final data upload" />
-    <MESSAGE value="Replaces &quot;file&quot; tag with &quot;report_file&quot; tag so that upload_report form can recognize the file as being a valid form, and added octet stream tag to match current form.  Needs some error checking, but if database entries are there, and information checks out, should upload fine.  Also may need to add authentication." />
-    <MESSAGE value="Figured out authentication and csrf token passing." />
     <MESSAGE value="Cleaned up code a bit." />
     <MESSAGE value="Tried to make report naming more robust" />
     <MESSAGE value="Added some more informative messages to figure out what there is and isn't metadata for, and also if an upload fails to stop the job right away." />
@@ -629,21 +668,18 @@
     <MESSAGE value="Completed up to updating status.  remaining is to add check for file and update status" />
     <MESSAGE value="Added back in need to verify ssl" />
     <MESSAGE value="Added initializing status for metadata already in variant viewer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added initializing status for metadata already in variant viewer" />
+    <MESSAGE value="Removed set trace" />
+    <MESSAGE value="clarified outputs" />
+    <MESSAGE value="Changed meta data script sync name to allow for import.  Created flag for verifying url when testing" />
+    <MESSAGE value="Created login tools module to reduce redundancy" />
+    <MESSAGE value="Fixed web stuff args" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed web stuff args" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/update_status.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -662,15 +698,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bionimbus_web-variant_viewer_sync.py">
+    <entry file="file://$PROJECT_DIR$/bionimbus_web_variant_viewer_sync.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#274#285#0" expanded="true" />
-            <marker date="1465500031000" expanded="true" signature="2262:2510" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465500031000" expanded="true" signature="2262:2513" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465500031000" expanded="true" signature="2542:2788" placeholder="SELECT P.f_n... t_experiment_unit" />
+            <marker date="1465502581000" expanded="true" signature="1769:2017" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465502581000" expanded="true" signature="1769:2020" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465502581000" expanded="true" signature="2049:2295" placeholder="SELECT P.f_n... t_experiment_unit" />
           </folding>
         </state>
       </provider>
@@ -701,15 +737,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bionimbus_web-variant_viewer_sync.py">
+    <entry file="file://$PROJECT_DIR$/bionimbus_web_variant_viewer_sync.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#274#285#0" expanded="true" />
-            <marker date="1465500031000" expanded="true" signature="2262:2510" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465500031000" expanded="true" signature="2262:2513" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465500031000" expanded="true" signature="2542:2788" placeholder="SELECT P.f_n... t_experiment_unit" />
+            <marker date="1465502581000" expanded="true" signature="1769:2017" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465502581000" expanded="true" signature="1769:2020" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465502581000" expanded="true" signature="2049:2295" placeholder="SELECT P.f_n... t_experiment_unit" />
           </folding>
         </state>
       </provider>
@@ -1026,14 +1062,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/upload_config.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1045,39 +1073,57 @@
     <entry file="file://$PROJECT_DIR$/update_status.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
           <folding>
             <element signature="e#399#410#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sync_seq_info.py">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.252809">
+          <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/login_tools.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <caret line="9" column="20" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
           <folding>
-            <element signature="e#337#348#0" expanded="true" />
-            <marker date="1465493910000" expanded="true" signature="1042:1066" placeholder="SELECT F.cre... " />
-            <marker date="1465493910000" expanded="true" signature="1042:1073" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465493910000" expanded="true" signature="1042:1081" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465493910000" expanded="true" signature="1042:1100" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465493910000" expanded="true" signature="1042:1101" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465493910000" expanded="true" signature="1042:1105" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465493910000" expanded="true" signature="1042:1121" placeholder="SELECT F.cre... t_file" />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bionimbus_web-variant_viewer_sync.py">
+    <entry file="file://$PROJECT_DIR$/sync_seq_info.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33238637">
-          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+        <state vertical-scroll-proportion="-8.851851">
+          <caret line="60" column="57" selection-start-line="60" selection-start-column="51" selection-end-line="60" selection-end-column="57" />
+          <folding>
+            <element signature="e#337#348#0" expanded="true" />
+            <marker date="1465502293000" expanded="true" signature="533:557" placeholder="SELECT F.cre... " />
+            <marker date="1465502293000" expanded="true" signature="533:564" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465502293000" expanded="true" signature="533:572" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465502293000" expanded="true" signature="533:591" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465502293000" expanded="true" signature="533:592" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465502293000" expanded="true" signature="533:596" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465502293000" expanded="true" signature="533:612" placeholder="SELECT F.cre... t_file" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bionimbus_web_variant_viewer_sync.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38210228">
+          <caret line="140" column="28" selection-start-line="140" selection-start-column="20" selection-end-line="140" selection-end-column="28" />
           <folding>
             <element signature="e#274#285#0" expanded="true" />
-            <marker date="1465500031000" expanded="true" signature="2262:2510" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465500031000" expanded="true" signature="2262:2513" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465500031000" expanded="true" signature="2542:2788" placeholder="SELECT P.f_n... t_experiment_unit" />
+            <marker date="1465502581000" expanded="true" signature="1769:2017" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465502581000" expanded="true" signature="1769:2020" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465502581000" expanded="true" signature="2049:2295" placeholder="SELECT P.f_n... t_experiment_unit" />
           </folding>
         </state>
       </provider>

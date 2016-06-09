@@ -138,7 +138,7 @@ def sync_meta_status():
             # date_dict has datetime objects, need to convert to to str
             sub_date = str(date_dict[bnid])
             status = 'Sample submitted for sequencing'
-            check = update_status(bnid, sub_date, post_client, login_url, set_status_url, 'submit_date', status)
+            check = update_status(bnid, sub_date, post_client, login_url, set_status_url, 'submit_date', status, vflag)
             if check != 0:
                 sys.stderr.write('Could not set seq status')
                 exit(1)
@@ -149,7 +149,7 @@ def sync_meta_status():
             if check == 'None':
                 status = 'Sample submitted for sequencing'
                 success = update_status(bnid, str(to_check[bnid]), post_client, login_url, set_status_url,
-                                        'submit_date', status)
+                                        'submit_date', status, vflag)
                 if success != 0:
                     sys.stderr.write('Could not update submit status for ' + bnid + '\n')
                     exit(1)
