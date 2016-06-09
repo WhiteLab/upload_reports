@@ -69,9 +69,9 @@ def query_bionimbus_web(conn, subproj):
     return entries
 
 
-def check_status(bnid, post_client, login_url, check_status_url):
+def check_status(bnid, post_client, login_url, check_status_url, vflag):
         to_check = {'bnid': bnid}
-        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
+        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url, vflag)
         check = post_client.post(check_status_url, data=json.dumps(to_check), headers=post_headers,
                                  cookies=post_cookies, allow_redirects=False)
 
@@ -145,7 +145,7 @@ def sync_meta_status():
 
     if len(to_check) > 0:
         for bnid in to_check:
-            check = check_status(bnid, post_client, login_url, check_status_url)
+            check = check_status(bnid, post_client, login_url, check_status_url, vflag)
             if check == 'None':
                 status = 'Sample submitted for sequencing'
                 success = update_status(bnid, str(to_check[bnid]), post_client, login_url, set_status_url,
