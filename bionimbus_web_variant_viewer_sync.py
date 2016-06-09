@@ -86,13 +86,13 @@ def sync_meta_status():
     args = docopt(__doc__)
     config_data = json.loads(open(args.get('<config>'), 'r').read())
     (login_url, username, password, get_study_url, get_bnid_url, db_user, db_pw, db_host, database,
-     post_meta_url, set_status_url, check_status_url) = (config_data['login_url'], config_data['username'],
+     post_meta_url, set_status_url, check_status_url, vflag) = (config_data['login_url'], config_data['username'],
          config_data['password'], config_data['urlGetStudy'], config_data['urlGetBnid'], config_data['dbUser'],
          config_data['dbPw'], config_data['dbHost'], config_data['db'], config_data['postMetaUrl'],
-                                         config_data['setStatusUrl'], config_data['checkStatusUrl'])
+        config_data['setStatusUrl'], config_data['checkStatusUrl'], config_data['vflag'])
 
     post_client = requests.session()
-    (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
+    (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url, vflag)
     login_data = dict(username=username, password=password)
     r = post_client.post(login_url, login_data, cookies=post_cookies, headers=post_headers)
     # get list of studies to check bionimbus web for
@@ -124,7 +124,7 @@ def sync_meta_status():
     # populate variant viewer with metadata for relevant studies if not populated already
     if len(to_add) > 0:
 
-        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
+        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url, vflag)
         # post_headers.update({'name': 'sheet'})
         check = post_client.post(post_meta_url, data=json.dumps(to_add), headers=post_headers,
                                  cookies=post_cookies, allow_redirects=False)
