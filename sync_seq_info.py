@@ -23,7 +23,6 @@ from login_tools import db_connect
 
 def check_seq_status(db, bnid):
     query = "SELECT F.created_on FROM t_file F WHERE F.f_bionimbus_id=%s AND F.is_active='T'"
-    sys.stderr.write(query + ' ' + bnid + '\n')
     cur = db.cursor()
     cur.execute(query, (bnid,))
     entry = cur.fetchone()

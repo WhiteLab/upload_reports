@@ -61,7 +61,6 @@ def query_bionimbus_web(conn, subproj):
         query = "SELECT P.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source, " \
                 "EU.created_on FROM  t_experiment_unit EU, t_project P WHERE EU.f_project=P.id AND P.f_name=%s " \
                 "AND  EU.is_Active='T'"
-    sys.stderr.write(query + '\n')
     cur = conn.cursor()
     cur.execute(query, (subproj,))
     entries = cur.fetchall()
@@ -122,8 +121,7 @@ def sync_meta_status():
                                                                  get_bnid_url, post_client, to_add, date_dict, to_check)
 
     # populate variant viewer with metadata for relevant studies if not populated already
-    if len(to_add) > 0:
-
+    if len(to_add['sheet']) > 0:
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url, vflag)
         # post_headers.update({'name': 'sheet'})
         check = post_client.post(post_meta_url, data=json.dumps(to_add), headers=post_headers,
@@ -133,7 +131,9 @@ def sync_meta_status():
             exit(1)
         sys.stderr.write('Created new entries in variant viewer\n')
         # set variant viewer for status submitted for sequencing for newly added stuff
+        ct = 0
         for new_entry in to_add['sheet']:
+            ct += 1
             bnid = new_entry[2]
             # date_dict has datetime objects, need to convert to to str
             sub_date = str(date_dict[bnid])
@@ -142,17 +142,22 @@ def sync_meta_status():
             if check != 0:
                 sys.stderr.write('Could not set seq status')
                 exit(1)
-
+        sys.stderr.write(str(ct) + 'samples added to metadata database\n')
+    else:
+        sys.stderr.write('No new metadata to add.  All up to date!\n')
     if len(to_check) > 0:
+        ct = 0
         for bnid in to_check:
             check = check_status(bnid, post_client, login_url, check_status_url, vflag)
-            if check == 'None':
+            if check == 'No status':
+                ct += 1
                 status = 'Sample submitted for sequencing'
                 success = update_status(bnid, str(to_check[bnid]), post_client, login_url, set_status_url,
                                         'submit_date', status, vflag)
                 if success != 0:
                     sys.stderr.write('Could not update submit status for ' + bnid + '\n')
                     exit(1)
+        sys.stderr.write(str(ct) + ' additional statuses updated\n')
 
 
 def main():
