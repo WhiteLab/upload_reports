@@ -75,7 +75,7 @@ def sync_seq_status():
             seq_date = check_seq_status(con, bnid)
             if seq_date is not None:
                 update_status(bnid, str(seq_date[0]), post_client, login_url, set_status_url,
-                              'sequence_date', 'SEQUENCED')
+                              'sequence_date', 'SEQUENCED', vflag)
 
 
 def main():

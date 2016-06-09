@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8841502b-757c-406f-aacf-3ff33d353e62" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bionimbus_web_variant_viewer_sync.py" afterPath="$PROJECT_DIR$/bionimbus_web_variant_viewer_sync.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/login_tools.py" afterPath="$PROJECT_DIR$/login_tools.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sync_seq_info.py" afterPath="$PROJECT_DIR$/sync_seq_info.py" />
     </list>
     <ignored path="upload_reports.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,29 +61,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sync_seq_info.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sync_seq_info.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sync_seq_info.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.518518">
-              <caret line="60" column="57" selection-start-line="60" selection-start-column="51" selection-end-line="60" selection-end-column="57" />
+            <state vertical-scroll-proportion="0.33238637">
+              <caret line="32" column="4" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
               <folding>
                 <element signature="e#337#348#0" expanded="true" />
-                <marker date="1465502293000" expanded="true" signature="533:557" placeholder="SELECT F.cre... " />
-                <marker date="1465502293000" expanded="true" signature="533:564" placeholder="SELECT F.cre... t_file" />
-                <marker date="1465502293000" expanded="true" signature="533:572" placeholder="SELECT F.cre... t_file" />
-                <marker date="1465502293000" expanded="true" signature="533:591" placeholder="SELECT F.cre... t_file" />
-                <marker date="1465502293000" expanded="true" signature="533:592" placeholder="SELECT F.cre... t_file" />
-                <marker date="1465502293000" expanded="true" signature="533:596" placeholder="SELECT F.cre... t_file" />
-                <marker date="1465502293000" expanded="true" signature="533:612" placeholder="SELECT F.cre... t_file" />
+                <marker date="1465503410000" expanded="true" signature="533:557" placeholder="SELECT F.cre... " />
+                <marker date="1465503410000" expanded="true" signature="533:564" placeholder="SELECT F.cre... t_file" />
+                <marker date="1465503410000" expanded="true" signature="533:572" placeholder="SELECT F.cre... t_file" />
+                <marker date="1465503410000" expanded="true" signature="533:591" placeholder="SELECT F.cre... t_file" />
+                <marker date="1465503410000" expanded="true" signature="533:592" placeholder="SELECT F.cre... t_file" />
+                <marker date="1465503410000" expanded="true" signature="533:596" placeholder="SELECT F.cre... t_file" />
+                <marker date="1465503410000" expanded="true" signature="533:612" placeholder="SELECT F.cre... t_file" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login_tools.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="login_tools.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/login_tools.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.16415869">
+            <state vertical-scroll-proportion="0.0">
               <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
@@ -134,9 +133,9 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/bionimbus_web-variant_viewer_sync.py" />
         <option value="$PROJECT_DIR$/update_status.py" />
-        <option value="$PROJECT_DIR$/sync_seq_info.py" />
         <option value="$PROJECT_DIR$/bionimbus_web_variant_viewer_sync.py" />
         <option value="$PROJECT_DIR$/login_tools.py" />
+        <option value="$PROJECT_DIR$/sync_seq_info.py" />
       </list>
     </option>
   </component>
@@ -618,7 +617,13 @@
       <option name="project" value="LOCAL" />
       <updated>1465502724824</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Added warning supression to login when verify is false">
+      <created>1465503235307</created>
+      <option name="number" value="00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1465503235307</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -660,7 +665,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Added some more informative messages to figure out what there is and isn't metadata for, and also if an upload fails to stop the job right away." />
     <MESSAGE value="Added more helpful error checking for log in" />
     <MESSAGE value="New tool added for updating sample pipeline status" />
     <MESSAGE value="Seem to work locally" />
@@ -685,7 +689,8 @@
     <MESSAGE value="Fixed web stuff args" />
     <MESSAGE value="Fixed update_status args" />
     <MESSAGE value="Fixed check_status args" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed check_status args" />
+    <MESSAGE value="Added warning supression to login when verify is false" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added warning supression to login when verify is false" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1098,23 +1103,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sync_seq_info.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.518518">
-          <caret line="60" column="57" selection-start-line="60" selection-start-column="51" selection-end-line="60" selection-end-column="57" />
-          <folding>
-            <element signature="e#337#348#0" expanded="true" />
-            <marker date="1465502293000" expanded="true" signature="533:557" placeholder="SELECT F.cre... " />
-            <marker date="1465502293000" expanded="true" signature="533:564" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465502293000" expanded="true" signature="533:572" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465502293000" expanded="true" signature="533:591" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465502293000" expanded="true" signature="533:592" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465502293000" expanded="true" signature="533:596" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465502293000" expanded="true" signature="533:612" placeholder="SELECT F.cre... t_file" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bionimbus_web_variant_viewer_sync.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.888889">
@@ -1129,10 +1117,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/login_tools.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16415869">
+        <state vertical-scroll-proportion="0.0">
           <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sync_seq_info.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33238637">
+          <caret line="32" column="4" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
+          <folding>
+            <element signature="e#337#348#0" expanded="true" />
+            <marker date="1465503410000" expanded="true" signature="533:557" placeholder="SELECT F.cre... " />
+            <marker date="1465503410000" expanded="true" signature="533:564" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465503410000" expanded="true" signature="533:572" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465503410000" expanded="true" signature="533:591" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465503410000" expanded="true" signature="533:592" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465503410000" expanded="true" signature="533:596" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465503410000" expanded="true" signature="533:612" placeholder="SELECT F.cre... t_file" />
           </folding>
         </state>
       </provider>
