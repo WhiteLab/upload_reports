@@ -16,12 +16,14 @@ import sys
 import requests
 import psycopg2
 import re
+import pdb
 from docopt import docopt
+from sync_seq_info import update_status
 
 
 def set_web_stuff(client, url):
     # set verify to False if testing
-    client.get(url)
+    client.get(url, verify=False)
     return client.cookies['csrftoken'], dict(client.cookies), {"X-CSRFToken": client.cookies['csrftoken'],
                                                                "Referer": url}
 
@@ -35,10 +37,10 @@ def db_connect(database, username, password, host):
         exit(1)
 
 
-def check_variant_viewer(result, sid, login, get_bnid, client, to_add, date_dict):
+def check_variant_viewer(result, sid, login, get_bnid, client, to_add, date_dict, to_check):
     # get all study-related info at once to check
-    getUrl = get_bnid + str(sid) + '/'
-    study_info = client.get(getUrl, params=login)
+    get_url = get_bnid + str(sid) + '/'
+    study_info = client.get(get_url, params=login)
     bnid_dict = {}
     for key in study_info.json():
         bnid = re.search('(\d+-\d+)\)$', study_info.json()[key])
@@ -59,7 +61,9 @@ def check_variant_viewer(result, sid, login, get_bnid, client, to_add, date_dict
             to_add['sheet'].append((study, sample, bnid, desc, cell))
             date_dict[bnid] = date
             sys.stderr.write('Found new entry to add for bionimbus id ' + bnid + ' sample ' + sample + '\n')
-    return to_add, date_dict
+        else:
+            to_check[bnid] = date
+    return to_add, date_dict, to_check
 
 
 def query_bionimbus_web(conn, subproj):
@@ -79,14 +83,28 @@ def query_bionimbus_web(conn, subproj):
     return entries
 
 
-def sync_status():
+def check_status(bnid, post_client, login_url, check_status_url):
+        to_check = {'bnid': bnid}
+        pdb.set_trace()
+        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
+        check = post_client.post(check_status_url, data=json.dumps(to_check), headers=post_headers,
+                                 cookies=post_cookies, allow_redirects=False)
+
+        if check.status_code != 200:
+            sys.stderr.write('Error in checking status for ' + bnid + '!  Check connections and stuff\n')
+            exit(1)
+        else:
+            return check.text
+
+
+def sync_meta_status():
     args = docopt(__doc__)
     config_data = json.loads(open(args.get('<config>'), 'r').read())
-    (login_url, post_url, username, password, get_study_url, get_bnid_url, db_user, db_pw, db_host, database,
-     post_meta_url, set_status_url) = (config_data['login_url'], config_data['urlUp'], config_data['username'],
+    (login_url, username, password, get_study_url, get_bnid_url, db_user, db_pw, db_host, database,
+     post_meta_url, set_status_url, check_status_url) = (config_data['login_url'], config_data['username'],
          config_data['password'], config_data['urlGetStudy'], config_data['urlGetBnid'], config_data['dbUser'],
          config_data['dbPw'], config_data['dbHost'], config_data['db'], config_data['postMetaUrl'],
-                                         config_data['setStatusUrl'])
+                                         config_data['setStatusUrl'], config_data['checkStatusUrl'])
 
     post_client = requests.session()
     (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
@@ -109,12 +127,14 @@ def sync_status():
     to_add = {'sheet': []}
     # dict for setting date of submission
     date_dict = {}
+    # dict to make sure existing metadata has an entry in the status database
+    to_check = {}
     for key in study_info.json():
         # adding pk for study to leverage metadata lookup function get_bnid_by_study
         entries = query_bionimbus_web(con, key)
         if len(entries) > 0:
-            (to_add, date_dict) = check_variant_viewer(entries, study_info.json()[key], login_data, get_bnid_url,
-                                                       post_client, to_add, date_dict)
+            (to_add, date_dict, to_check) = check_variant_viewer(entries, study_info.json()[key], login_data,
+                                                                 get_bnid_url, post_client, to_add, date_dict, to_check)
 
     # populate variant viewer with metadata for relevant studies if not populated already
     if len(to_add) > 0:
@@ -127,28 +147,32 @@ def sync_status():
             sys.stderr.write('Adding new metadata failed!\n')
             exit(1)
         sys.stderr.write('Created new entries in variant viewer\n')
-    # set variant viewer for status submitted for sequencing for newly added stuff
-    for new_entry in to_add['sheet']:
-        bnid = new_entry[2]
-        # date_dict has datetime objects, need to convert to to str
-        to_update = {'bnid': bnid, 'submit_date': str(date_dict[bnid])}
-        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
-        check = post_client.post(set_status_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
-                                 allow_redirects=False)
-        if check.status_code != 200:
-            sys.stderr.write('Could not set submit date for ' + bnid + '\n')
-        status = 'Sample submitted for sequencing'
-        to_update = {'bnid': bnid, 'status': status}
-        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
-        check = post_client.post(set_status_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
-                                 allow_redirects=False)
-        if check.status_code != 200:
-            sys.stderr.write('Could not set seq status')
-        sys.stderr.write('Updated submission status for samples\n')
+        # set variant viewer for status submitted for sequencing for newly added stuff
+        for new_entry in to_add['sheet']:
+            bnid = new_entry[2]
+            # date_dict has datetime objects, need to convert to to str
+            sub_date = str(date_dict[bnid])
+            status = 'Sample submitted for sequencing'
+            check = update_status(bnid, sub_date, post_client, login_url, set_status_url, 'submit_date', status)
+            if check != 0:
+                sys.stderr.write('Could not set seq status')
+                exit(1)
+            sys.stderr.write('Updated submission status for ' + bnid + '\n')
+
+    if len(to_check) > 0:
+        for bnid in to_check:
+            check = check_status(bnid, post_client, login_url, check_status_url)
+            if check == 'None':
+                status = 'Sample submitted for sequencing'
+                success = update_status(bnid, str(to_check[bnid]), post_client, login_url, set_status_url,
+                                        'submit_date', status)
+                if success != 0:
+                    sys.stderr.write('Could not update submit status for ' + bnid + '\n')
+                    exit(1)
 
 
 def main():
-    sync_status()
+    sync_meta_status()
 
 
 if __name__ == '__main__':

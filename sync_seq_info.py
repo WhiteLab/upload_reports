@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 """
-Plugin/cronjob to sync project-specific sequencing info between bionimbus web and variant viewer
+Plugin/cronjob to sync project-specific sequencing info between bionimbus web and variant viewer, also initialize
+statuses for stuff already in vv, but without a status
 
-Usage: ./bionimbus_web-variant_viewer_sync.py <config>
+Usage: ./sync_seq_info.py <config>
 
 Arguments:
     <config>    json config file with genome, caller, and get/post urls
@@ -44,24 +45,26 @@ def check_seq_status(db, bnid):
     return entry
 
 
-def update_status(bnid, seq_date, post_client, login_url, set_status_url):
-        to_update = {'bnid': bnid, 'sequence_date': seq_date}
+def update_status(bnid, seq_date, post_client, login_url, set_status_url, field, status):
+        to_update = {'bnid': bnid, field: seq_date}
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
         check = post_client.post(set_status_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
                                  allow_redirects=False)
         if check.status_code != 200:
             sys.stderr.write('Could not set submit date for ' + bnid + '\n')
-        status = 'SEQUENCED'
+            return 1
         to_update = {'bnid': bnid, 'status': status}
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
         check = post_client.post(set_status_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
                                  allow_redirects=False)
         if check.status_code != 200:
             sys.stderr.write('Could not set seq status')
+            return 1
         sys.stderr.write('Updated sequencing status for ' + bnid + '\n')
+        return 0
 
 
-def sync_status():
+def sync_seq_status():
     args = docopt(__doc__)
     config_data = json.loads(open(args.get('<config>'), 'r').read())
     (login_url, username, password, get_status_url, db_user, db_pw, db_host, database, set_status_url) = \
@@ -86,12 +89,13 @@ def sync_status():
         if status == 'Sample submitted for sequencing':
             seq_date = check_seq_status(con, bnid)
             if seq_date is not None:
-                update_status(bnid, str(seq_date[0]), post_client, login_url, set_status_url)
+                update_status(bnid, str(seq_date[0]), post_client, login_url, set_status_url,
+                              'sequence_date', 'SEQUENCED')
 
 
 
 def main():
-    sync_status()
+    sync_seq_status()
 
 
 if __name__ == '__main__':
