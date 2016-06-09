@@ -15,25 +15,10 @@ Options:
 import json
 import sys
 import requests
-import psycopg2
 import pdb
 from docopt import docopt
-
-
-def set_web_stuff(client, url):
-    # set verify to False if testing
-    client.get(url)
-    return client.cookies['csrftoken'], dict(client.cookies), {"X-CSRFToken": client.cookies['csrftoken'],
-                                                               "Referer": url}
-
-
-def db_connect(database, username, password, host):
-    try:
-        constring = "dbname=" + database + " user=" + username + " password=" + password + " host=" + host
-        return psycopg2.connect(constring)
-    except:
-        sys.stderr.write('Failed connection\n')
-        exit(1)
+from bionimbus_web_variant_viewer_sync import set_web_stuff
+from bionimbus_web_variant_viewer_sync import db_connect
 
 
 def check_seq_status(db, bnid):
@@ -45,16 +30,16 @@ def check_seq_status(db, bnid):
     return entry
 
 
-def update_status(bnid, seq_date, post_client, login_url, set_status_url, field, status):
+def update_status(bnid, seq_date, post_client, login_url, set_status_url, field, status, vflag):
         to_update = {'bnid': bnid, field: seq_date}
-        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
+        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url, vflag)
         check = post_client.post(set_status_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
                                  allow_redirects=False)
         if check.status_code != 200:
             sys.stderr.write('Could not set submit date for ' + bnid + '\n')
             return 1
         to_update = {'bnid': bnid, 'status': status}
-        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
+        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url, vflag)
         check = post_client.post(set_status_url, data=json.dumps(to_update), headers=post_headers, cookies=post_cookies,
                                  allow_redirects=False)
         if check.status_code != 200:
@@ -67,13 +52,13 @@ def update_status(bnid, seq_date, post_client, login_url, set_status_url, field,
 def sync_seq_status():
     args = docopt(__doc__)
     config_data = json.loads(open(args.get('<config>'), 'r').read())
-    (login_url, username, password, get_status_url, db_user, db_pw, db_host, database, set_status_url) = \
+    (login_url, username, password, get_status_url, db_user, db_pw, db_host, database, set_status_url, vflag) = \
         (config_data['login_url'], config_data['username'], config_data['password'], config_data['urlGetStatus'],
          config_data['dbUser'], config_data['dbPw'], config_data['dbHost'], config_data['db'],
-         config_data['setStatusUrl'])
+         config_data['setStatusUrl'], config_data['vflag'])
 
     post_client = requests.session()
-    (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
+    (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url, vflag)
     login_data = dict(username=username, password=password)
     r = post_client.post(login_url, login_data, cookies=post_cookies, headers=post_headers)
     # get list of bnids to check bionimbus web for

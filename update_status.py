@@ -19,9 +19,12 @@ import requests
 from docopt import docopt
 
 
-def set_web_stuff(client, url):
+def set_web_stuff(client, url, vflag):
     # set verify to False if testing
-    client.get(url)
+    if vflag == 'Y':
+        client.get(url)
+    else:
+        client.get(url, verify=False)
     return client.cookies['csrftoken'], dict(client.cookies), {"X-CSRFToken": client.cookies['csrftoken'],
                                                                "Referer": url}
 
