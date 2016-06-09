@@ -7,6 +7,9 @@ def set_web_stuff(client, url, vflag):
     if vflag == 'Y':
         client.get(url)
     else:
+        import requests
+        from requests.packages.urllib3.exceptions import InsecureRequestWarning
+        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
         client.get(url, verify=False)
     return client.cookies['csrftoken'], dict(client.cookies), {"X-CSRFToken": client.cookies['csrftoken'],
                                                                "Referer": url}

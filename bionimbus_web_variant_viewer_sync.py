@@ -14,7 +14,6 @@ Options:
 import json
 import sys
 import requests
-import psycopg2
 import re
 import pdb
 from docopt import docopt
@@ -77,6 +76,7 @@ def check_status(bnid, post_client, login_url, check_status_url, vflag):
 
         if check.status_code != 200:
             sys.stderr.write('Error in checking status for ' + bnid + '!  Check connections and stuff\n')
+
             exit(1)
         else:
             return check.text
