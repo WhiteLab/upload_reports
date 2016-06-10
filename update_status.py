@@ -14,29 +14,19 @@ Options:
 
 import json
 import sys
-
+from login_tools import set_web_stuff
 import requests
 from docopt import docopt
-
-
-def set_web_stuff(client, url, vflag):
-    # set verify to False if testing
-    if vflag == 'Y':
-        client.get(url)
-    else:
-        client.get(url, verify=False)
-    return client.cookies['csrftoken'], dict(client.cookies), {"X-CSRFToken": client.cookies['csrftoken'],
-                                                               "Referer": url}
 
 
 def update_status():
     args = docopt(__doc__)
     config_data = json.loads(open(args.get('<config>'), 'r').read())
-    (login_url, post_url, username, password) = (config_data['login_url'], config_data['urlUp'],
-                                                 config_data['username'], config_data['password'])
+    (login_url, set_status_url, username, password, vflag) = (config_data['login_url'], config_data['setStatusUrl'],
+                                    config_data['username'], config_data['password'], config_data['vflag'])
 
     post_client = requests.session()
-    (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
+    (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url, vflag)
     login_data = dict(username=username, password=password)
     r = post_client.post(login_url, login_data, cookies=post_cookies, headers=post_headers)
     if r.status_code == 200:
@@ -49,8 +39,8 @@ def update_status():
     for line in table:
         (bid, field, value) = line.rstrip('\n').split('\t')
         updata = {'bnid': bid, field: value}
-        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url)
-        check = post_client.post(post_url, data=json.dumps(updata), headers=post_headers, cookies=post_cookies,
+        (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url, vflag)
+        check = post_client.post(set_status_url, data=json.dumps(updata), headers=post_headers, cookies=post_cookies,
                                  allow_redirects=False)
         if check.status_code != 200:
             sys.stderr.write('Could not update information for ' + bid + ' ' + field + ' check connection and whether'
