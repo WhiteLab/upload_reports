@@ -29,6 +29,8 @@ def check_variant_viewer(result, sid, login, get_bnid, client, to_add, date_dict
     bnid_dict = {}
     for key in study_info.json():
         bnid = re.search('(\d+-\d+)\)$', study_info.json()[key])
+        #troubleshooting why some existing entries are found twice
+        sys.stderr.write(bnid + '\n')
         bnid_dict[bnid.group(1)] = 1
     for entry in result:
         (study, sample, bnid, d1, d2, cell, date) = entry
@@ -142,7 +144,7 @@ def sync_meta_status():
             if check != 0:
                 sys.stderr.write('Could not set seq status')
                 exit(1)
-        sys.stderr.write(str(ct) + 'samples added to metadata database\n')
+        sys.stderr.write(str(ct) + ' samples added to metadata database\n')
     else:
         sys.stderr.write('No new metadata to add.  All up to date!\n')
     if len(to_check) > 0:
