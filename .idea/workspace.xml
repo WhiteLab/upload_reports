@@ -50,13 +50,13 @@
       <file leaf-file-name="bionimbus_web_variant_viewer_sync.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bionimbus_web_variant_viewer_sync.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5138122">
-              <caret line="31" column="47" selection-start-line="31" selection-start-column="47" selection-end-line="31" selection-end-column="47" />
+            <state vertical-scroll-proportion="0.39538714">
+              <caret line="60" column="11" selection-start-line="60" selection-start-column="11" selection-end-line="60" selection-end-column="11" />
               <folding>
                 <element signature="e#274#285#0" expanded="true" />
-                <marker date="1465919268000" expanded="true" signature="1876:2124" placeholder="SELECT S.f_n... t_experiment_unit" />
-                <marker date="1465919268000" expanded="true" signature="1876:2127" placeholder="SELECT S.f_n... t_experiment_unit" />
-                <marker date="1465919268000" expanded="true" signature="2156:2402" placeholder="SELECT P.f_n... t_experiment_unit" />
+                <marker date="1465928870000" expanded="true" signature="1826:2066" placeholder="SELECT S.f_n... t_experiment_unit" />
+                <marker date="1465928870000" expanded="true" signature="1826:2069" placeholder="SELECT S.f_n... t_experiment_unit" />
+                <marker date="1465928870000" expanded="true" signature="2102:2352" placeholder="SELECT P.f_n... t_experiment_unit" />
               </folding>
             </state>
           </provider>
@@ -66,9 +66,8 @@
         <entry file="file://$PROJECT_DIR$/sync_seq_info.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="61" column="65" selection-start-line="61" selection-start-column="65" selection-end-line="61" selection-end-column="65" />
+              <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
               <folding>
-                <element signature="e#337#348#0" expanded="true" />
                 <marker date="1465508259000" expanded="true" signature="533:557" placeholder="SELECT F.cre... " />
                 <marker date="1465508259000" expanded="true" signature="533:564" placeholder="SELECT F.cre... t_file" />
                 <marker date="1465508259000" expanded="true" signature="533:572" placeholder="SELECT F.cre... t_file" />
@@ -146,10 +145,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1561" />
-    <option name="y" value="-536" />
-    <option name="width" value="1479" />
-    <option name="height" value="1175" />
+    <option name="x" value="1617" />
+    <option name="y" value="-388" />
+    <option name="width" value="1440" />
+    <option name="height" value="877" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -642,20 +641,26 @@
       <option name="project" value="LOCAL" />
       <updated>1465919187138</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Troubleshooting">
+      <created>1465919271797</created>
+      <option name="number" value="00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1465919271797</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1561" y="-536" width="1479" height="1175" extended-state="0" />
+    <frame x="1617" y="-388" width="1440" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1691023" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17381974" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.117313154" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16337286" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -740,9 +745,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#274#285#0" expanded="true" />
-            <marker date="1465919268000" expanded="true" signature="1876:2124" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465919268000" expanded="true" signature="1876:2127" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465919268000" expanded="true" signature="2156:2402" placeholder="SELECT P.f_n... t_experiment_unit" />
+            <marker date="1465928870000" expanded="true" signature="1826:2066" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465928870000" expanded="true" signature="1826:2069" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465928870000" expanded="true" signature="2102:2352" placeholder="SELECT P.f_n... t_experiment_unit" />
           </folding>
         </state>
       </provider>
@@ -779,9 +784,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#274#285#0" expanded="true" />
-            <marker date="1465919268000" expanded="true" signature="1876:2124" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465919268000" expanded="true" signature="1876:2127" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465919268000" expanded="true" signature="2156:2402" placeholder="SELECT P.f_n... t_experiment_unit" />
+            <marker date="1465928870000" expanded="true" signature="1826:2066" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465928870000" expanded="true" signature="1826:2069" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465928870000" expanded="true" signature="2102:2352" placeholder="SELECT P.f_n... t_experiment_unit" />
           </folding>
         </state>
       </provider>
@@ -1090,33 +1095,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/update_status.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="52" selection-start-line="32" selection-start-column="52" selection-end-line="32" selection-end-column="52" />
-          <folding>
-            <element signature="e#399#410#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sync_seq_info.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="61" column="65" selection-start-line="61" selection-start-column="65" selection-end-line="61" selection-end-column="65" />
-          <folding>
-            <element signature="e#337#348#0" expanded="true" />
-            <marker date="1465508259000" expanded="true" signature="533:557" placeholder="SELECT F.cre... " />
-            <marker date="1465508259000" expanded="true" signature="533:564" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465508259000" expanded="true" signature="533:572" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465508259000" expanded="true" signature="533:591" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465508259000" expanded="true" signature="533:592" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465508259000" expanded="true" signature="533:596" placeholder="SELECT F.cre... t_file" />
-            <marker date="1465508259000" expanded="true" signature="533:612" placeholder="SELECT F.cre... t_file" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/login_tools.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1143,6 +1121,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/update_status.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="52" selection-start-line="32" selection-start-column="52" selection-end-line="32" selection-end-column="52" />
+          <folding>
+            <element signature="e#399#410#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/upload_reports.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1151,15 +1139,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/sync_seq_info.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+          <folding>
+            <marker date="1465508259000" expanded="true" signature="533:557" placeholder="SELECT F.cre... " />
+            <marker date="1465508259000" expanded="true" signature="533:564" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465508259000" expanded="true" signature="533:572" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465508259000" expanded="true" signature="533:591" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465508259000" expanded="true" signature="533:592" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465508259000" expanded="true" signature="533:596" placeholder="SELECT F.cre... t_file" />
+            <marker date="1465508259000" expanded="true" signature="533:612" placeholder="SELECT F.cre... t_file" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bionimbus_web_variant_viewer_sync.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5138122">
-          <caret line="31" column="47" selection-start-line="31" selection-start-column="47" selection-end-line="31" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.39538714">
+          <caret line="60" column="11" selection-start-line="60" selection-start-column="11" selection-end-line="60" selection-end-column="11" />
           <folding>
             <element signature="e#274#285#0" expanded="true" />
-            <marker date="1465919268000" expanded="true" signature="1876:2124" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465919268000" expanded="true" signature="1876:2127" placeholder="SELECT S.f_n... t_experiment_unit" />
-            <marker date="1465919268000" expanded="true" signature="2156:2402" placeholder="SELECT P.f_n... t_experiment_unit" />
+            <marker date="1465928870000" expanded="true" signature="1826:2066" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465928870000" expanded="true" signature="1826:2069" placeholder="SELECT S.f_n... t_experiment_unit" />
+            <marker date="1465928870000" expanded="true" signature="2102:2352" placeholder="SELECT P.f_n... t_experiment_unit" />
           </folding>
         </state>
       </provider>

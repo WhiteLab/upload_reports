@@ -22,15 +22,13 @@ from login_tools import db_connect
 from sync_seq_info import update_status
 
 
-def check_variant_viewer(result, sid, login, get_bnid, client, to_add, date_dict, to_check):
+def check_variant_viewer(result, study_id, login, get_bnid, client, to_add, date_dict, to_check):
     # get all study-related info at once to check
-    get_url = get_bnid + str(sid) + '/'
+    get_url = get_bnid + str(study_id) + '/'
     study_info = client.get(get_url, params=login)
     bnid_dict = {}
     for key in study_info.json():
         bnid = re.search('(\d+-\d+)\)$', study_info.json()[key])
-        #troubleshooting why some existing entries are found twice
-        sys.stderr.write(study_info.json()[key] + '\n')
         bnid_dict[bnid.group(1)] = 1
     for entry in result:
         (study, sample, bnid, d1, d2, cell, date) = entry
@@ -54,15 +52,16 @@ def check_variant_viewer(result, sid, login, get_bnid, client, to_add, date_dict
 
 
 def query_bionimbus_web(conn, subproj):
-    if subproj != 'PDX':
-        # planning on using sample and treatment fields as part of experiment description
-        query = "SELECT S.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source, " \
-                "EU.created_on FROM t_experiment_unit EU, t_subproject S WHERE EU.f_subproject=S.id AND S.f_name=%s " \
-                "AND  EU.is_active='T'"
-    else:
-        query = "SELECT P.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source, " \
-                "EU.created_on FROM  t_experiment_unit EU, t_project P WHERE EU.f_project=P.id AND P.f_name=%s " \
-                "AND  EU.is_Active='T'"
+    # created pdx-relevant subprojects to eliminate reliance on that
+    # if subproj != 'PDX':
+    # planning on using sample and treatment fields as part of experiment description
+    query = "SELECT S.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source, " \
+            "EU.created_on FROM t_experiment_unit EU, t_subproject S WHERE EU.f_subproject=S.id AND S.f_name=%s " \
+            "AND  EU.is_active='T'"
+    # else:
+    #     query = "SELECT P.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source, " \
+    #             "EU.created_on FROM  t_experiment_unit EU, t_project P WHERE EU.f_project=P.id AND P.f_name=%s " \
+    #             "AND  EU.is_Active='T'"
     cur = conn.cursor()
     cur.execute(query, (subproj,))
     entries = cur.fetchall()
