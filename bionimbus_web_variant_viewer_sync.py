@@ -30,7 +30,7 @@ def check_variant_viewer(result, sid, login, get_bnid, client, to_add, date_dict
     for key in study_info.json():
         bnid = re.search('(\d+-\d+)\)$', study_info.json()[key])
         #troubleshooting why some existing entries are found twice
-        sys.stderr.write(bnid + '\n')
+        sys.stderr.write(study_info.json()[key] + '\n')
         bnid_dict[bnid.group(1)] = 1
     for entry in result:
         (study, sample, bnid, d1, d2, cell, date) = entry
