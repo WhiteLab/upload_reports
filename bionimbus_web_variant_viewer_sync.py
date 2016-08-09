@@ -31,7 +31,7 @@ def check_variant_viewer(result, study_id, login, get_bnid, client, to_add, date
         bnid = re.search('(\d+-\d+)\)$', study_info.json()[key])
         bnid_dict[bnid.group(1)] = 1
     for entry in result:
-        (study, sample, bnid, d1, d2, cell, date) = entry
+        (study, sample, bnid, library_type, d1, d2, cell, date) = entry
         if bnid not in bnid_dict:
             if d1 is not None:
                 desc = d1
@@ -43,7 +43,7 @@ def check_variant_viewer(result, study_id, login, get_bnid, client, to_add, date
                 desc = 'NA'
             if cell is None:
                 cell = 'NA'
-            to_add['sheet'].append((study, sample, bnid, desc, cell))
+            to_add['sheet'].append((study, sample, bnid, library_type, desc, cell))
             date_dict[bnid] = date
             sys.stderr.write('Found new entry to add for bionimbus id ' + bnid + ' sample ' + sample + '\n')
         else:
@@ -55,9 +55,9 @@ def query_bionimbus_web(conn, subproj):
     # created pdx-relevant subprojects to eliminate reliance on that
     # if subproj != 'PDX':
     # planning on using sample and treatment fields as part of experiment description
-    query = "SELECT S.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source, " \
-            "EU.created_on FROM t_experiment_unit EU, t_subproject S WHERE EU.f_subproject=S.id AND S.f_name=%s " \
-            "AND  EU.is_active='T'"
+    query = "SELECT S.f_name, EU.f_name, EU.f_bionimbus_id, L.f_Name, EU.f_sample, EU.f_treatment, EU.f_source, " \
+            "EU.created_on FROM t_experiment_unit EU, t_subproject S, t_library_type L WHERE EU.f_subproject=S.id AND" \
+            " S.f_name=%s AND EU.f_library_type=L.id AND  EU.is_active='T'"
     # else:
     #     query = "SELECT P.f_name, EU.f_name, EU.f_bionimbus_id, EU.f_sample, EU.f_treatment, EU.f_source, " \
     #             "EU.created_on FROM  t_experiment_unit EU, t_project P WHERE EU.f_project=P.id AND P.f_name=%s " \
