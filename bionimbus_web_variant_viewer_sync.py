@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/local/bin/python
 """
 Plugin/cronjob to sync project-specific info between bionimbus web and variant viewer
 

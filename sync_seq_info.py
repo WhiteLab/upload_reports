@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/local/bin/python
 """
 Plugin/cronjob to sync project-specific sequencing info between bionimbus web and variant viewer, also initialize
 statuses for stuff already in vv, but without a status
