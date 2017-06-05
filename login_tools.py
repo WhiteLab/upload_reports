@@ -1,4 +1,3 @@
-import psycopg2
 import sys
 
 
@@ -16,6 +15,7 @@ def set_web_stuff(client, url, vflag):
 
 
 def db_connect(database, username, password, host):
+    import psycopg2
     try:
         constring = "dbname=" + database + " user=" + username + " password=" + password + " host=" + host
         return psycopg2.connect(constring)
