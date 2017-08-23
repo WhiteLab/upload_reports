@@ -44,7 +44,7 @@ def update_status():
                                  allow_redirects=False)
         if check.status_code != 200:
             sys.stderr.write('Could not update information for ' + bid + ' ' + field + ' check connection and whether'
-                            ' metadata exists for this sample\n')
+                            ' metadata exists for this sample, failed with status ' + str(check.status_code) + '\n')
         else:
             sys.stderr.write('Status for update ' + bid + ' ' + str(check.status_code) + '\n')
 
