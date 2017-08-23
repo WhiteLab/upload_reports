@@ -39,6 +39,7 @@ def update_status():
     for line in table:
         (bid, field, value) = line.rstrip('\n').split('\t')
         updata = {'bnid': bid, field: value}
+        print updata
         (post_csrftoken, post_cookies, post_headers) = set_web_stuff(post_client, login_url, vflag)
         check = post_client.post(set_status_url, data=json.dumps(updata), headers=post_headers, cookies=post_cookies,
                                  allow_redirects=False)
