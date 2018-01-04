@@ -35,7 +35,7 @@ def update_status():
                 if fn[-13:] == 'qc_stats.json':
                     new_fn = fn.split()
                     sys.stderr.write('QC file ' + new_fn[-1] + ' found!\n')
-                    dl_file = 'rsync --rt ' + user + '@' + server + ':' + ppath + '/' + fpath + new_fn[-1] + ' ' \
+                    dl_file = 'rsync -rt ' + user + '@' + server + ':' + ppath + '/' + fpath + new_fn[-1] + ' ' \
                               + fpath + new_fn[-1]
                     sys.stderr.write('Downloading desired QC file ' + dl_file + '\n')
                     subprocess.call(dl_file, shell=True)
