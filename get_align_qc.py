@@ -14,6 +14,7 @@ Options:
 
 import json
 import sys
+import os
 import subprocess
 from docopt import docopt
 
@@ -35,7 +36,12 @@ def update_status():
                 if fn[-13:] == 'qc_stats.json':
                     new_fn = fn.split()
                     sys.stderr.write('QC file ' + new_fn[-1] + ' found!\n')
-                    dl_file = 'rsync -rRt ' + user + '@' + server + ':' + ppath + '/' + fpath + new_fn[-1] + ' ' \
+                    # check and make host dir since rsync can't do it because why make my life easier
+                    if not os.path.isdir(fpath):
+                        create_path = 'mkdir -p ' + fpath
+                        sys.stderr.write('Creating directory path ' + create_path + '\n')
+                        subprocess.call(create_path, shell=True)
+                    dl_file = 'rsync -rt ' + user + '@' + server + ':' + ppath + '/' + fpath + new_fn[-1] + ' ' \
                               + fpath + new_fn[-1]
                     sys.stderr.write('Downloading desired QC file ' + dl_file + '\n')
                     subprocess.call(dl_file, shell=True)
