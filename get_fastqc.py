@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """
-To be run from variant viewer server - downloads and organizes alignment stats file
+To be run from variant viewer server - downloads and organizes fastqc stats file
 
-Usage: ./get_align_qc.py <table> <config>
+Usage: ./get_fastqc.py <table> <config>
 
 Arguments:
     <table>  table with bnids
@@ -19,7 +19,7 @@ import subprocess
 from docopt import docopt
 
 
-def get_align_qc():
+def get_fastq_qc():
     args = docopt(__doc__)
     config_data = json.loads(open(args.get('<config>'), 'r').read())
     (user, server, ppath, rpath) = (config_data['user'], config_data['server'], config_data['project_path'],
@@ -28,14 +28,14 @@ def get_align_qc():
         bnid = bnid.rstrip('\n')
         # remote path might differ from fixed local path
         fpath = rpath + '/' + bnid + '/QC/'
-        lpath = 'ALIGN/' + bnid + '/QC/'
+        lpath = 'FASTQC/' + bnid + '/QC/'
         list_stats = 'rsync --list-only ' + user + '@' + server + ':' + ppath + '/' + fpath
         sys.stderr.write('Searching for valid files ' + list_stats + '\n')
         contents = subprocess.check_output(list_stats, shell=True).decode()
         flist = contents.split('\n')
         for fn in flist:
             try:
-                if fn[-13:] == 'qc_stats.json':
+                if fn[-11:] == 'fastqc.html':
                     new_fn = fn.split()
                     sys.stderr.write('QC file ' + new_fn[-1] + ' found!\n')
                     # check and make host dir since rsync can't do it because why make my life easier
@@ -52,7 +52,7 @@ def get_align_qc():
 
 
 def main():
-    get_align_qc()
+    get_fastq_qc()
 
 
 if __name__ == '__main__':
