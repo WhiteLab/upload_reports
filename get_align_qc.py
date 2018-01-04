@@ -22,11 +22,13 @@ from docopt import docopt
 def update_status():
     args = docopt(__doc__)
     config_data = json.loads(open(args.get('<config>'), 'r').read())
-    (user, server, ppath, dpath) = (config_data['user'], config_data['server'], config_data['project_path'],
+    (user, server, ppath, rpath) = (config_data['user'], config_data['server'], config_data['project_path'],
                                     config_data['data_path'])
     for bnid in open(args.get('<table>')):
         bnid = bnid.rstrip('\n')
-        fpath = dpath + '/' + bnid + '/QC/'
+        # remote path might differ from fixed local path
+        fpath = rpath + '/' + bnid + '/QC/'
+        lpath = 'ALIGN/' + bnid + '/QC/'
         list_stats = 'rsync --list-only ' + user + '@' + server + ':' + ppath + '/' + fpath
         sys.stderr.write('Searching for valid files ' + list_stats + '\n')
         contents = subprocess.check_output(list_stats, shell=True).decode()
@@ -37,12 +39,12 @@ def update_status():
                     new_fn = fn.split()
                     sys.stderr.write('QC file ' + new_fn[-1] + ' found!\n')
                     # check and make host dir since rsync can't do it because why make my life easier
-                    if not os.path.isdir(fpath):
-                        create_path = 'mkdir -p ' + fpath
+                    if not os.path.isdir(lpath):
+                        create_path = 'mkdir -p ' + lpath
                         sys.stderr.write('Creating directory path ' + create_path + '\n')
                         subprocess.call(create_path, shell=True)
                     dl_file = 'rsync -rt ' + user + '@' + server + ':' + ppath + '/' + fpath + new_fn[-1] + ' ' \
-                              + fpath + new_fn[-1]
+                              + lpath + new_fn[-1]
                     sys.stderr.write('Downloading desired QC file ' + dl_file + '\n')
                     subprocess.call(dl_file, shell=True)
             except:
