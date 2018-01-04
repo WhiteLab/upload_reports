@@ -24,6 +24,7 @@ def update_status():
     (user, server, ppath, dpath) = (config_data['user'], config_data['server'], config_data['project_path'],
                                     config_data['data_path'])
     for bnid in open(args.get('<table>')):
+        bnid = bnid.rstrip('\n')
         fpath = dpath + '/' + bnid + '/QC'
         list_stats = 'rsync --list-only ' + user + '@' + server + ':' + ppath + '/' + fpath
         contents = subprocess.check_output(list_stats, shell=True).decode()
