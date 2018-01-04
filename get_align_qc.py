@@ -27,6 +27,7 @@ def update_status():
         bnid = bnid.rstrip('\n')
         fpath = dpath + '/' + bnid + '/QC'
         list_stats = 'rsync --list-only ' + user + '@' + server + ':' + ppath + '/' + fpath
+        sys.stderr.write('Searching for valid files ' + list_stats + '\n')
         contents = subprocess.check_output(list_stats, shell=True).decode()
         flist = contents.split('\n')
         for fn in flist:
