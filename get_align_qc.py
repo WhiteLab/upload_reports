@@ -25,7 +25,7 @@ def update_status():
                                     config_data['data_path'])
     for bnid in open(args.get('<table>')):
         bnid = bnid.rstrip('\n')
-        fpath = dpath + '/' + bnid + '/QC'
+        fpath = dpath + '/' + bnid + '/QC/'
         list_stats = 'rsync --list-only ' + user + '@' + server + ':' + ppath + '/' + fpath
         sys.stderr.write('Searching for valid files ' + list_stats + '\n')
         contents = subprocess.check_output(list_stats, shell=True).decode()
@@ -35,8 +35,8 @@ def update_status():
                 if fn[-13:] == 'qc_stats.json':
                     new_fn = fn.split()
                     sys.stderr.write('QC file ' + new_fn[-1] + ' found!\n')
-                    dl_file = 'rsync --rt ' + user + '@' + server + ':' + ppath + '/' + fpath + '/' + new_fn[-1] + ' ' \
-                              + fpath + '/' + new_fn[-1]
+                    dl_file = 'rsync --rt ' + user + '@' + server + ':' + ppath + '/' + fpath + new_fn[-1] + ' ' \
+                              + fpath + new_fn[-1]
                     sys.stderr.write('Downloading desired QC file ' + dl_file + '\n')
                     subprocess.call(dl_file, shell=True)
             except:
