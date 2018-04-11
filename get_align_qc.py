@@ -31,24 +31,27 @@ def get_align_qc():
         lpath = 'ALIGN/' + bnid + '/QC/'
         list_stats = 'rsync --list-only ' + user + '@' + server + ':' + ppath + '/' + fpath
         sys.stderr.write('Searching for valid files ' + list_stats + '\n')
-        contents = subprocess.check_output(list_stats, shell=True).decode()
-        flist = contents.split('\n')
-        for fn in flist:
-            try:
-                if fn[-13:] == 'qc_stats.json':
-                    new_fn = fn.split()
-                    sys.stderr.write('QC file ' + new_fn[-1] + ' found!\n')
-                    # check and make host dir since rsync can't do it because why make my life easier
-                    if not os.path.isdir(lpath):
-                        create_path = 'mkdir -p ' + lpath
-                        sys.stderr.write('Creating directory path ' + create_path + '\n')
-                        subprocess.call(create_path, shell=True)
-                    dl_file = 'rsync -rt ' + user + '@' + server + ':' + ppath + '/' + fpath + new_fn[-1] + ' ' \
-                              + lpath + new_fn[-1]
-                    sys.stderr.write('Downloading desired QC file ' + dl_file + '\n')
-                    subprocess.call(dl_file, shell=True)
-            except:
-                sys.stderr.write('Lazy file name matching failed on ' + fn + 'ignore!\n')
+        try:
+            contents = subprocess.check_output(list_stats, shell=True).decode()
+            flist = contents.split('\n')
+            for fn in flist:
+                try:
+                    if fn[-13:] == 'qc_stats.json':
+                        new_fn = fn.split()
+                        sys.stderr.write('QC file ' + new_fn[-1] + ' found!\n')
+                        # check and make host dir since rsync can't do it because why make my life easier
+                        if not os.path.isdir(lpath):
+                            create_path = 'mkdir -p ' + lpath
+                            sys.stderr.write('Creating directory path ' + create_path + '\n')
+                            subprocess.call(create_path, shell=True)
+                        dl_file = 'rsync -rt ' + user + '@' + server + ':' + ppath + '/' + fpath + new_fn[-1] + ' ' \
+                                  + lpath + new_fn[-1]
+                        sys.stderr.write('Downloading desired QC file ' + dl_file + '\n')
+                        subprocess.call(dl_file, shell=True)
+                except:
+                    sys.stderr.write('Lazy file name matching failed on ' + fn + 'ignore!\n')
+        except:
+            sys.stderr.write('Could not find listing for ' + bnid + ' in ' + ppath + '/' + fpath + '\n')
 
 
 def main():
